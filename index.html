@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpy na Dwóch Kołach — Wyjazd Motocyklowy 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg: #FAFAF7;
+  --text: #1A1A18;
+  --text-secondary: #5C5C56;
+  --accent: #C4451C;
+  --accent-light: #F4DDD4;
+  --border: #E5E5DF;
+  --card-bg: #FFFFFF;
+  --mountain: #3D6B5E;
+  --stage-colors: #C4451C, #2E7D5B, #2563A8, #8B5CF6, #D97706, #0E7490, #B91C60;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ─── HERO (compact) ─── */
+.hero {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(165deg, #1a2e1f 0%, #2d4a3a 30%, #3d6b5e 60%, #5a8f7e 100%);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 100%, rgba(250,250,247,0.08) 0%, transparent 70%),
+    repeating-linear-gradient(180deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+}
+
+.hero-mountains {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+}
+
+.hero-mountains svg {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem 2rem;
+  max-width: 700px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1rem;
+  padding: 0.3rem 1rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+  font-weight: 400;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: #A8D5BA;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  padding: 2rem 2rem;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ─── MAP ─── */
+.map-section {
+  padding: 3rem 2rem;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+#map {
+  width: 100%;
+  max-width: 1100px;
+  height: 520px;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.legend-item:hover { opacity: 0.7; }
+
+.legend-dot {
+  width: 12px; height: 4px;
+  border-radius: 2px;
+}
+
+/* ─── STAGES ─── */
+.stages {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.stage-card {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stage-card:hover {
+  background: rgba(0,0,0,0.015);
+  margin: 0 -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 12px;
+}
+
+.stage-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.stage-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.stage-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.35rem;
+}
+
+.stage-distance {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.stage-route {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-bottom: 0.6rem;
+}
+
+.stage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ─── STAGE IMAGES ─── */
+.stage-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.stage-images a {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+  aspect-ratio: 16/10;
+  background: #f0efe9;
+  position: relative;
+}
+
+.stage-images a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.stage-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stage-images .img-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.3rem 0.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.stage-images .img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* ─── INFO SECTION ─── */
+.info-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.info-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.info-card p, .info-card ul {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-card li::before {
+  content: '→ ';
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+
+footer .cta-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .hero { min-height: 30vh; }
+  .stats-bar { gap: 1.5rem; }
+  .stage-card { grid-template-columns: 48px 1fr; gap: 1rem; }
+  .stage-number { width: 44px; height: 44px; font-size: 1.5rem; }
+  #map { height: 380px; }
+  .stage-images { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+
+/* Custom Leaflet popup */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+  font-family: 'Source Sans 3', sans-serif !important;
+}
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; }
+
+/* ─── BUDGET TABLE ─── */
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin-top: 1.5rem;
+}
+
+.budget-table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.budget-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.budget-table tr.category-header td {
+  font-weight: 600;
+  padding-top: 1.2rem;
+  border-bottom: 1px solid var(--text);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.budget-table .amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.budget-table .note {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 300;
+}
+
+.budget-table tr.total td {
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-top: 2px solid var(--text);
+  border-bottom: none;
+  padding-top: 1rem;
+}
+
+.budget-table tr.total .amount {
+  color: var(--accent);
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+}
+
+.budget-table .dummy {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mountains">
+    <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+      <path d="M0,200 L0,140 Q120,60 240,110 Q360,30 480,90 Q540,50 620,80 Q720,20 840,70 Q960,30 1080,85 Q1200,40 1320,100 Q1380,70 1440,120 L1440,200 Z" fill="rgba(250,250,247,0.06)"/>
+      <path d="M0,200 L0,160 Q180,100 360,140 Q540,80 720,130 Q900,70 1080,120 Q1260,90 1440,150 L1440,200 Z" fill="rgba(250,250,247,0.04)"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Motocyklowy wyjazd 2026</div>
+    <h1>Alpy na <em>dwóch kołach</em></h1>
+    <p class="hero-sub">7 dni, 7 etapów, ponad 2260 km alpejskich dróg — od Dolnego Śląska po Dolomity i z powrotem.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-value">2 260</div><div class="stat-label">Kilometrów</div></div>
+  <div class="stat"><div class="stat-value">7</div><div class="stat-label">Etapów</div></div>
+  <div class="stat"><div class="stat-value">4</div><div class="stat-label">Kraje</div></div>
+  <div class="stat"><div class="stat-value">6</div><div class="stat-label">Noclegów</div></div>
+</div>
+
+<!-- MAP -->
+<section class="map-section">
+  <h2 class="section-title">Trasa</h2>
+  <p class="section-subtitle">Kliknij w etap, aby zobaczyć szczegóły. Kliknij w trasę na mapie, aby podświetlić etap.</p>
+  <div id="map"></div>
+  <div class="map-legend" id="mapLegend"></div>
+</section>
+
+<!-- STAGES -->
+<section class="stages">
+  <h2 class="section-title">Etapy</h2>
+  <p class="section-subtitle">Szczegółowy plan każdego dnia podróży</p>
+  <div id="stageCards"></div>
+</section>
+
+<!-- INFO -->
+<section class="info-section">
+  <h2 class="section-title">Informacje praktyczne</h2>
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>🏨 Noclegi</h3>
+      <ul>
+        <li>Noc 1 — Wels (Austria)</li>
+        <li>Noc 2 — Zell am See</li>
+        <li>Noc 3, 4, 5 — Cortina d'Ampezzo (3 noce, baza wypadowa)</li>
+        <li>Noc 6 — Krieglach (Styria)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>⛽ Tankowanie</h3>
+      <p>Stacje paliw w Alpach mogą być rzadziej rozmieszczone, szczególnie na przełęczach. Zalecany zapas paliwa na minimum 200 km. W Austrii i Włoszech paliwo dostępne przy autostradach i w dolinach.</p>
+    </div>
+    <div class="info-card">
+      <h3>🛣️ Opłaty drogowe</h3>
+      <ul>
+        <li>Austria — winiety autostradowe (10-dniowa)</li>
+        <li>Grossglockner Hochalpenstraße — opłata ok. €28 (moto)</li>
+        <li>Czechy — e-vinieta</li>
+        <li>Włochy — opłaty odcinkowo na autostradach</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>📋 Co zabrać</h3>
+      <ul>
+        <li>Kamizelka odblaskowa (obowiązkowa w AT)</li>
+        <li>Apteczka i trójkąt ostrzegawczy</li>
+        <li>Odzież na zmienną pogodę w górach</li>
+        <li>Buty trekkingowe (dzień 4 — Tre Cime!)</li>
+        <li>Dokumenty: dowód, prawo jazdy, OC</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>🚗 Logistyka</h3>
+      <p>Za trzema motocyklami jedzie samochód wsparcia. Na etapie 3 (Grossglockner) mama przesiada się na motocykl taty jako pasażer — po przejechaniu trasy wracamy do Zell am See po auto, a następnie wszyscy jadą do Cortina d'Ampezzo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="info-section" id="budget">
+  <h2 class="section-title">Szacunkowy budżet</h2>
+  <p class="section-subtitle">Koszt na osobę (3 motocykle + 1 samochód). Noclegi zostaną zaktualizowane po rezerwacji.</p>
+  <div id="budgetTable"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="cta-text">Do zobaczenia na trasie! 🏍️</div>
+  <p>W razie pytań — kontaktuj się z organizatorem.<br>Pliki GPX dostępne do pobrania na życzenie.</p>
+</footer>
+
+<script>
+// ─── DATA ───
+const stageColors = ['#C4451C','#2E7D5B','#2563A8','#8B5CF6','#D97706','#0E7490','#B91C60'];
+
+const stages = [
+  {
+    num: 1,
+    name: 'Dojazd przez Czechy',
+    route: 'Kłodzko → České Budějovice → Wels',
+    distance: '493 km',
+    type: 'transfer',
+    tags: ['Czechy','Austria','dojazd'],
+    desc: 'Etap dojazdowy z Dolnego Śląska przez malownicze Czechy południowe. Trasa prowadzi przez Kotlinę Kłodzką, czeskie miasteczka i wzdłuż Wełtawy, z celem w austriackim Wels.',
+    overnight: 'Wels',
+    images: [
+      // { url: 'https://...', caption: 'Kotlina Kłodzka' },
+      // { url: 'https://...', caption: 'České Budějovice' },
+    ]
+  },
+  {
+    num: 2,
+    name: 'Schafberg i Rossfeld',
+    route: 'Wels → St. Wolfgang → Rossfeld Panoramastraße → Zell am See',
+    distance: '260 km',
+    type: 'scenic',
+    tags: ['Schafberg','kolejka Himmelspforte','Rossfeld','Salzkammergut'],
+    desc: 'Rano wizyta w St. Wolfgang im Salzkammergut i wjazd kolejką na Himmelspforte Schafberg — punkt widokowy na 1783 m z panoramą alpejskich jezior. Po południu przejazd legendarną Rossfeld Panoramastraße (najwyżej położona droga Niemiec, 1600 m n.p.m.) z widokami na masyw Watzmann. Zakończenie dnia w Zell am See.',
+    overnight: 'Zell am See',
+    images: [
+      { url: 'https://coeser.de/blog/wp-content/uploads/2016/09/schafberg_aufmacher-978x550.jpg', caption: 'Schafberg — kolejka' },
+      // { url: 'https://...', caption: 'Rossfeld Panoramastraße' },
+      // { url: 'https://...', caption: 'Zell am See' },
+    ]
+  },
+  {
+    num: 3,
+    name: 'Grossglockner',
+    route: 'Zell am See → Grossglockner Hochalpenstraße → Cortina d\'Ampezzo',
+    distance: '294 km',
+    type: 'highlight',
+    tags: ['Grossglockner','Kaiser-Franz-Josefs-Höhe','Edelweißspitze','Hohe Tauern'],
+    desc: 'Koronny etap wyjazdu! Przejazd legendarną Grossglockner Hochalpenstraße z postojami na Kaiser-Franz-Josefs-Höhe (widok na lodowiec Pasterze i najwyższy szczyt Austrii — 3798 m) oraz Edelweißspitze (2571 m — najwyższy punkt drogi). Mama dołącza na motocykl taty jako pasażer! Po Grossglocknerze powrót do Zell am See po samochód, a następnie przejazd do Cortina d\'Ampezzo na 3 kolejne noce.',
+    overnight: 'Cortina d\'Ampezzo',
+    images: [
+      // { url: 'https://...', caption: 'Grossglockner Hochalpenstraße' },
+      // { url: 'https://...', caption: 'Kaiser-Franz-Josefs-Höhe' },
+      // { url: 'https://...', caption: 'Edelweißspitze 2571m' },
+      // { url: 'https://...', caption: 'Lodowiec Pasterze' },
+    ]
+  },
+  {
+    num: 4,
+    name: 'Tre Cime i zapora Vajont',
+    route: 'Cortina → Tre Cime di Lavaredo → Vajont → Lago del Mis → Cortina',
+    distance: '201 km',
+    type: 'highlight',
+    tags: ['trekking','Tre Cime','Vajont','Lago del Mis'],
+    desc: 'Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Sama zapora stoi do dziś nienaruszona — poruszające świadectwo tragedii. Powrót widokowymi trasami wzdłuż pięknego Lago del Mis.',
+    overnight: 'Cortina d\'Ampezzo',
+    images: [
+      // { url: 'https://...', caption: 'Tre Cime di Lavaredo' },
+      // { url: 'https://...', caption: 'Zapora Vajont' },
+      // { url: 'https://...', caption: 'Lago del Mis' },
+    ]
+  },
+  {
+    num: 5,
+    name: 'Piz Boè i Sella',
+    route: 'Cortina → Piz Boè → Torri del Vajolet → Lago di Fedaia → Cortina',
+    distance: '132 km',
+    type: 'scenic',
+    tags: ['Piz Boè','Torri del Sella','Lago di Fedaia','przełęcze'],
+    desc: 'Krótka, ale niezwykle widokowa pętla wokół masywu Sella. Przejazd przez przełęcze z widokami na Piz Boè (3152 m) i dramatyczne Torri del Sella. Postój nad Lago di Fedaia — jeziorem u stóp lodowca Marmolady, najwyższego szczytu Dolomitów. Czysta motocyklowa przyjemność — serpentyny, widoki i włoska kawa na każdym przystanku.',
+    overnight: 'Cortina d\'Ampezzo',
+    images: [
+      // { url: 'https://...', caption: 'Piz Boè 3152m' },
+      // { url: 'https://...', caption: 'Torri del Sella' },
+      // { url: 'https://...', caption: 'Lago di Fedaia' },
+    ]
+  },
+  {
+    num: 6,
+    name: 'Powrót — przez Styrię',
+    route: 'Cortina d\'Ampezzo → Judenburg → Krieglach',
+    distance: '396 km',
+    type: 'scenic',
+    tags: ['Styria','drogi alpejskie','powrót'],
+    desc: 'Pożegnanie z Dolomitami i rozpoczęcie drogi powrotnej. Przejazd przez austriackie Alpy Centralne, górskie przełęcze Styrii i zielone doliny w kierunku Krieglach. Ostatni wieczór z alpejskim klimatem.',
+    overnight: 'Krieglach',
+    images: [
+      // { url: 'https://...', caption: 'Drogi Styrii' },
+    ]
+  },
+  {
+    num: 7,
+    name: 'Powrót przez Morawy',
+    route: 'Krieglach → Brno → Kłodzko',
+    distance: '485 km',
+    type: 'transfer',
+    tags: ['Austria','Czechy','Morawy','powrót'],
+    desc: 'Etap powrotny z Krieglach przez Wiedeń (obwodnica), czeskie Morawy z opcjonalnym postojem w Brnie, i dalej przez Czechy z powrotem na Dolny Śląsk. Koniec przygody — ale wspomnienia zostają!',
+    images: [
+      // { url: 'https://...', caption: 'Brno' },
+    ]
+  }
+];
+
+const tracks = [[[50.81386, 16.80372], [50.79834, 16.7978], [50.78348, 16.80225], [50.77127, 16.81174], [50.76451, 16.82494], [50.76005, 16.841], [50.75055, 16.84636], [50.73592, 16.8376], [50.72202, 16.82506], [50.7064, 16.82737], [50.69277, 16.82242], [50.6781, 16.82551], [50.66796, 16.82986], [50.64918, 16.82694], [50.63579, 16.82622], [50.61949, 16.82799], [50.60577, 16.81459], [50.5982, 16.80491], [50.58172, 16.80463], [50.56787, 16.78911], [50.5552, 16.79767], [50.53148, 16.77888], [50.51347, 16.75954], [50.50479, 16.73875], [50.49922, 16.72531], [50.4867, 16.71464], [50.47721, 16.70688], [50.46575, 16.68919], [50.45876, 16.67291], [50.45744, 16.65663], [50.45131, 16.6325], [50.44037, 16.62565], [50.43746, 16.61133], [50.43246, 16.57082], [50.42696, 16.54466], [50.42473, 16.51437], [50.42543, 16.48144], [50.42154, 16.45665], [50.41133, 16.44355], [50.4098, 16.42126], [50.40691, 16.40948], [50.40479, 16.39583], [50.40465, 16.38448], [50.39406, 16.36752], [50.39725, 16.35197], [50.40258, 16.33624], [50.41108, 16.32216], [50.40752, 16.30139], [50.40659, 16.28654], [50.41156, 16.26976], [50.42223, 16.25848], [50.43023, 16.24655], [50.43461, 16.23541], [50.43423, 16.21282], [50.43294, 16.20019], [50.42541, 16.19145], [50.41821, 16.17783], [50.41615, 16.16885], [50.41058, 16.16141], [50.40652, 16.14848], [50.40508, 16.12756], [50.39779, 16.10596], [50.39677, 16.08608], [50.40008, 16.06201], [50.39176, 16.05411], [50.38444, 16.03687], [50.39036, 16.00728], [50.38788, 15.98672], [50.38505, 15.95961], [50.37319, 15.91873], [50.37466, 15.91335], [50.37091, 15.90693], [50.36364, 15.90653], [50.35634, 15.905], [50.34814, 15.91181], [50.34282, 15.905], [50.33326, 15.87905], [50.31315, 15.8663], [50.29757, 15.84392], [50.28528, 15.82311], [50.25271, 15.80239], [50.23398, 15.79276], [50.2318, 15.79181], [50.22153, 15.807], [50.21779, 15.82062], [50.21202, 15.82031], [50.20231, 15.82114], [50.18657, 15.80545], [50.16082, 15.79841], [50.14507, 15.79481], [50.11963, 15.78843], [50.10087, 15.76614], [50.08555, 15.75177], [50.05872, 15.74745], [50.04092, 15.74484], [50.03287, 15.74774], [50.02116, 15.75339], [50.00798, 15.76899], [49.99354, 15.76675], [49.97584, 15.78209], [49.96771, 15.80483], [49.95642, 15.8236], [49.9345, 15.82249], [49.91761, 15.82808], [49.90156, 15.82415], [49.89001, 15.82398], [49.86698, 15.82468], [49.84924, 15.80983], [49.83676, 15.80798], [49.82278, 15.81836], [49.80368, 15.81264], [49.78997, 15.8127], [49.77564, 15.81709], [49.7573, 15.81631], [49.73146, 15.81697], [49.70427, 15.81176], [49.69702, 15.80597], [49.69145, 15.79676], [49.67808, 15.77337], [49.67401, 15.73318], [49.66466, 15.7232], [49.65759, 15.70535], [49.64207, 15.70278], [49.63606, 15.68943], [49.6253, 15.68429], [49.6174, 15.65816], [49.61529, 15.63762], [49.61243, 15.61832], [49.60668, 15.60325], [49.61122, 15.59234], [49.6173, 15.58347], [49.60945, 15.57461], [49.60267, 15.57613], [49.59724, 15.56072], [49.58637, 15.53926], [49.57588, 15.51664], [49.56932, 15.50015], [49.56384, 15.46029], [49.56161, 15.45396], [49.55717, 15.44006], [49.55282, 15.42584], [49.54483, 15.39667], [49.53989, 15.37976], [49.53553, 15.36117], [49.53447, 15.353], [49.525, 15.3491], [49.5122, 15.34237], [49.50012, 15.32875], [49.49247, 15.29957], [49.48012, 15.28146], [49.46872, 15.25938], [49.45578, 15.24206], [49.44392, 15.22556], [49.43983, 15.20416], [49.439, 15.17285], [49.44149, 15.14134], [49.4411, 15.11628], [49.43111, 15.10253], [49.42863, 15.07109], [49.42299, 15.04735], [49.42695, 15.02187], [49.42554, 14.99577], [49.42356, 14.95809], [49.42505, 14.94328], [49.4271, 14.93], [49.43365, 14.90388], [49.43291, 14.88289], [49.42675, 14.86016], [49.41208, 14.8383], [49.40457, 14.8202], [49.4046, 14.79138], [49.40766, 14.73913], [49.40569, 14.72108], [49.40478, 14.71652], [49.40008, 14.72175], [49.37866, 14.72355], [49.36324, 14.72371], [49.3364, 14.73741], [49.29451, 14.73512], [49.26776, 14.73633], [49.24268, 14.72834], [49.21613, 14.72333], [49.19728, 14.69831], [49.17677, 14.67893], [49.16122, 14.64705], [49.12549, 14.60421], [49.11079, 14.57143], [49.09387, 14.55848], [49.07591, 14.54374], [49.05623, 14.51968], [49.0302, 14.50873], [49.01304, 14.51667], [48.99309, 14.51962], [48.97353, 14.51878], [48.95739, 14.50936], [48.94477, 14.50538], [48.9313, 14.49173], [48.93307, 14.46371], [48.93526, 14.45832], [48.93297, 14.44703], [48.92507, 14.44498], [48.92234, 14.43709], [48.91113, 14.43292], [48.89697, 14.43837], [48.88473, 14.43157], [48.87148, 14.4147], [48.84866, 14.38694], [48.84591, 14.36901], [48.83965, 14.35724], [48.83122, 14.34508], [48.82474, 14.33378], [48.81932, 14.32418], [48.81547, 14.31891], [48.80795, 14.3211], [48.8047, 14.31218], [48.7976, 14.30525], [48.79175, 14.30543], [48.78439, 14.29878], [48.775, 14.30099], [48.76103, 14.31487], [48.75167, 14.31426], [48.74023, 14.32734], [48.73101, 14.33077], [48.72222, 14.33375], [48.71446, 14.34217], [48.70511, 14.34593], [48.6944, 14.35575], [48.6898, 14.35965], [48.67893, 14.35766], [48.66908, 14.35446], [48.66778, 14.36114], [48.66305, 14.36301], [48.65472, 14.3605], [48.65383, 14.36478], [48.6543, 14.36992], [48.64486, 14.36621], [48.63721, 14.37029], [48.63076, 14.3711], [48.62458, 14.35515], [48.6176, 14.34599], [48.61896, 14.32745], [48.61632, 14.31262], [48.61085, 14.31208], [48.60305, 14.31833], [48.59545, 14.32261], [48.58725, 14.32294], [48.58025, 14.31859], [48.57322, 14.32141], [48.56202, 14.31646], [48.55599, 14.32368], [48.54736, 14.31415], [48.53634, 14.29916], [48.52777, 14.29644], [48.52214, 14.30588], [48.51352, 14.29492], [48.49765, 14.30161], [48.4908, 14.29763], [48.48501, 14.29677], [48.47881, 14.29042], [48.47023, 14.27982], [48.46597, 14.27148], [48.4557, 14.26594], [48.45128, 14.27366], [48.44484, 14.28438], [48.43755, 14.29344], [48.43012, 14.29495], [48.42085, 14.29716], [48.41912, 14.29805], [48.40649, 14.29724], [48.39223, 14.29716], [48.3814, 14.2928], [48.37042, 14.29147], [48.36121, 14.29048], [48.34692, 14.29317], [48.33823, 14.29301], [48.32736, 14.28485], [48.31749, 14.28327], [48.31181, 14.28373], [48.30654, 14.28429], [48.3038, 14.27135], [48.30743, 14.25788], [48.30703, 14.23636], [48.31019, 14.21693], [48.32145, 14.19877], [48.32376, 14.18818], [48.32635, 14.17452], [48.31666, 14.17437], [48.29796, 14.16497], [48.2902, 14.14247], [48.28671, 14.14232], [48.28292, 14.1475], [48.27603, 14.15572], [48.26562, 14.15791], [48.25801, 14.15739], [48.24672, 14.14758], [48.23479, 14.13895], [48.22981, 14.13092], [48.21596, 14.12849], [48.19921, 14.13755], [48.1924, 14.12376], [48.18903, 14.10938], [48.18812, 14.0859], [48.17717, 14.05865], [48.1664, 14.03886], [48.1627, 14.0313], [48.15785, 14.02837], [48.1567, 14.02473], [48.15656, 14.0244]], [[48.15656, 14.0244], [48.15528, 14.02234], [48.15475, 14.02338], [48.15209, 14.02711], [48.15308, 14.0299], [48.15361, 14.03625], [48.15313, 14.04053], [48.14778, 14.04577], [48.13554, 14.04825], [48.11952, 14.04477], [48.1075, 14.03872], [48.09914, 14.04053], [48.0859, 14.04482], [48.07724, 14.04656], [48.07269, 14.04807], [48.06097, 14.03577], [48.05195, 14.02097], [48.04259, 13.99413], [48.02857, 13.97193], [48.01439, 13.93703], [48.00753, 13.91499], [48.00301, 13.8828], [48.0047, 13.84946], [48.00349, 13.82464], [47.99717, 13.79534], [47.98603, 13.77732], [47.9642, 13.75604], [47.9573, 13.73428], [47.9557, 13.72864], [47.95428, 13.73263], [47.95552, 13.74136], [47.9491, 13.75201], [47.94013, 13.75709], [47.93509, 13.76343], [47.93294, 13.77583], [47.93147, 13.78606], [47.92674, 13.78765], [47.92046, 13.77931], [47.91496, 13.77665], [47.9088, 13.78031], [47.90415, 13.77551], [47.89989, 13.76568], [47.89149, 13.7671], [47.88126, 13.77321], [47.87343, 13.77614], [47.86694, 13.77744], [47.86151, 13.77981], [47.85373, 13.77933], [47.85129, 13.77377], [47.84421, 13.77686], [47.83703, 13.78449], [47.83217, 13.78616], [47.82875, 13.79092], [47.82073, 13.7807], [47.81417, 13.77427], [47.8084, 13.77755], [47.80336, 13.78221], [47.79667, 13.77428], [47.78958, 13.76055], [47.78369, 13.73952], [47.77957, 13.73001], [47.76855, 13.72037], [47.75888, 13.70488], [47.75003, 13.68895], [47.74426, 13.67496], [47.73935, 13.66251], [47.7299, 13.65915], [47.72533, 13.64648], [47.71831, 13.63501], [47.71642, 13.62723], [47.71945, 13.61357], [47.71768, 13.6024], [47.71755, 13.5904], [47.71754, 13.57954], [47.7158, 13.56892], [47.71252, 13.5553], [47.7111, 13.5422], [47.71414, 13.52061], [47.7144, 13.50744], [47.71324, 13.49028], [47.72054, 13.49587], [47.72529, 13.49414], [47.73059, 13.48705], [47.73067, 13.47745], [47.73266, 13.46353], [47.73609, 13.45496], [47.74018, 13.44809], [47.74013, 13.44455], [47.73944, 13.43927], [47.74001, 13.44474], [47.73971, 13.44918], [47.73602, 13.45517], [47.73272, 13.46381], [47.73069, 13.47813], [47.73061, 13.48713], [47.72522, 13.49433], [47.72003, 13.49553], [47.71303, 13.48834], [47.71277, 13.47736], [47.71101, 13.45993], [47.71447, 13.44857], [47.71817, 13.43593], [47.72245, 13.42632], [47.72647, 13.42108], [47.73379, 13.41223], [47.73802, 13.39572], [47.74452, 13.38434], [47.75317, 13.37201], [47.76144, 13.36713], [47.76618, 13.36316], [47.76939, 13.35979], [47.77087, 13.36054], [47.77344, 13.3566], [47.77339, 13.35007], [47.78537, 13.34143], [47.79456, 13.32757], [47.79941, 13.31508], [47.79589, 13.30554], [47.79206, 13.29878], [47.79128, 13.28944], [47.79593, 13.27865], [47.80059, 13.26652], [47.80373, 13.2543], [47.80968, 13.24691], [47.81435, 13.23699], [47.81603, 13.23058], [47.81911, 13.21712], [47.81965, 13.21039], [47.81953, 13.20151], [47.81904, 13.19098], [47.8174, 13.18228], [47.81347, 13.18029], [47.81101, 13.18851], [47.80491, 13.1961], [47.79981, 13.19089], [47.79571, 13.17923], [47.79192, 13.17347], [47.78552, 13.17849], [47.77621, 13.18089], [47.76905, 13.18119], [47.76217, 13.18031], [47.75508, 13.17868], [47.75174, 13.17488], [47.74488, 13.1713], [47.7389, 13.16298], [47.73505, 13.15504], [47.73055, 13.14872], [47.72564, 13.14363], [47.72161, 13.1372], [47.71252, 13.13442], [47.70671, 13.12864], [47.70224, 13.12276], [47.69924, 13.11777], [47.69853, 13.11052], [47.69274, 13.10995], [47.68867, 13.10618], [47.68587, 13.10605], [47.68413, 13.10155], [47.68316, 13.0973], [47.68549, 13.09214], [47.68465, 13.09008], [47.68679, 13.08712], [47.68159, 13.09047], [47.68052, 13.08784], [47.67711, 13.08509], [47.67433, 13.08364], [47.6677, 13.08978], [47.66363, 13.09412], [47.65921, 13.09586], [47.66229, 13.08845], [47.66469, 13.08018], [47.66143, 13.07635], [47.6582, 13.07565], [47.6548, 13.08121], [47.65156, 13.07966], [47.64234, 13.07982], [47.64111, 13.09019], [47.64243, 13.09236], [47.64037, 13.09592], [47.6369, 13.09205], [47.63503, 13.08985], [47.63425, 13.0861], [47.63271, 13.09335], [47.63229, 13.09244], [47.62844, 13.09127], [47.6286, 13.09444], [47.62535, 13.09181], [47.61865, 13.08486], [47.6198, 13.07734], [47.62077, 13.07632], [47.62346, 13.07248], [47.62184, 13.07167], [47.6174, 13.07127], [47.61854, 13.06676], [47.61768, 13.06363], [47.6229, 13.0635], [47.62443, 13.05722], [47.62748, 13.05143], [47.62797, 13.05363], [47.62845, 13.05643], [47.63039, 13.05317], [47.63076, 13.05833], [47.63191, 13.05589], [47.63219, 13.05176], [47.63387, 13.04277], [47.63287, 13.03764], [47.63289, 13.03132], [47.63075, 13.02815], [47.63117, 13.02667], [47.63166, 13.02201], [47.63152, 13.01983], [47.63248, 13.01321], [47.63141, 13.01087], [47.63041, 13.00792], [47.62925, 13.00414], [47.6265, 13.00056], [47.62436, 12.9947], [47.62614, 12.98721], [47.6223, 12.98199], [47.62057, 12.9768], [47.61849, 12.97115], [47.61745, 12.9642], [47.61496, 12.95446], [47.61125, 12.9444], [47.60613, 12.93584], [47.60254, 12.92896], [47.60401, 12.92053], [47.60562, 12.91066], [47.60919, 12.9023], [47.60939, 12.90545], [47.60947, 12.9109], [47.61307, 12.90123], [47.61493, 12.89801], [47.61532, 12.88839], [47.61963, 12.87904], [47.62701, 12.87762], [47.63116, 12.86978], [47.63617, 12.85671], [47.64302, 12.85191], [47.6538, 12.8499], [47.66448, 12.84093], [47.6693, 12.83169], [47.67304, 12.82766], [47.6768, 12.82346], [47.68096, 12.82113], [47.68385, 12.81704], [47.68753, 12.81076], [47.68998, 12.8027], [47.68532, 12.79367], [47.67967, 12.78482], [47.67953, 12.77082], [47.6698, 12.762], [47.66492, 12.75178], [47.66097, 12.74619], [47.65309, 12.74072], [47.64417, 12.73184], [47.6423, 12.72722], [47.63183, 12.72789], [47.62653, 12.71971], [47.62072, 12.71297], [47.61507, 12.70574], [47.60551, 12.70142], [47.59955, 12.70107], [47.59582, 12.69799], [47.58856, 12.6945], [47.58558, 12.69735], [47.58364, 12.69486], [47.58163, 12.69889], [47.57545, 12.69937], [47.56951, 12.70347], [47.56343, 12.71363], [47.55631, 12.7223], [47.55131, 12.72399], [47.53876, 12.71955], [47.53181, 12.73079], [47.52341, 12.74705], [47.51889, 12.75442], [47.51029, 12.76096], [47.49995, 12.78963], [47.48863, 12.82291], [47.47878, 12.8318], [47.46818, 12.82817], [47.45385, 12.83191], [47.43896, 12.84147], [47.43243, 12.84459], [47.42915, 12.843], [47.427, 12.84047], [47.42198, 12.83549], [47.41989, 12.83332], [47.41915, 12.8214], [47.41294, 12.81192], [47.40275, 12.80821], [47.39618, 12.80043], [47.39056, 12.80343], [47.38269, 12.80807], [47.37201, 12.80645], [47.36481, 12.80195], [47.35779, 12.79987], [47.35004, 12.80011], [47.34414, 12.79832], [47.33921, 12.79767], [47.33142, 12.79699], [47.32449, 12.79661], [47.32375, 12.7966]], [[47.32375, 12.7966], [47.3135, 12.79402], [47.30653, 12.78857], [47.29914, 12.7939], [47.29494, 12.79662], [47.29239, 12.8007], [47.28516, 12.81057], [47.27932, 12.82372], [47.27165, 12.82549], [47.26424, 12.82424], [47.25649, 12.82503], [47.24335, 12.82585], [47.23135, 12.82577], [47.22362, 12.8267], [47.21256, 12.83014], [47.20065, 12.83406], [47.192, 12.82705], [47.18217, 12.82287], [47.17467, 12.81713], [47.16702, 12.81461], [47.15792, 12.81247], [47.155, 12.81214], [47.15, 12.81007], [47.15142, 12.81253], [47.15281, 12.8155], [47.14937, 12.81447], [47.1453, 12.81434], [47.14077, 12.81073], [47.13446, 12.80849], [47.13094, 12.80716], [47.1238, 12.80866], [47.12188, 12.81], [47.12668, 12.81094], [47.12679, 12.81271], [47.12888, 12.81554], [47.12285, 12.8201], [47.12036, 12.82324], [47.11926, 12.82534], [47.11763, 12.82797], [47.11681, 12.82622], [47.11687, 12.8324], [47.11296, 12.83201], [47.103, 12.83589], [47.09694, 12.83304], [47.08716, 12.83841], [47.08542, 12.84111], [47.0792, 12.83871], [47.07763, 12.84184], [47.07363, 12.83951], [47.07101, 12.83903], [47.06925, 12.842], [47.06673, 12.83415], [47.06493, 12.82691], [47.06433, 12.82612], [47.06419, 12.82325], [47.06321, 12.81797], [47.05995, 12.81574], [47.05847, 12.8072], [47.05654, 12.80106], [47.06006, 12.79306], [47.06406, 12.78319], [47.06863, 12.77003], [47.07768, 12.76638], [47.08018, 12.76556], [47.07253, 12.75722], [47.07288, 12.75592], [47.07332, 12.75561], [47.07282, 12.75529], [47.07542, 12.76041], [47.07646, 12.7645], [47.07311, 12.76836], [47.06569, 12.77839], [47.06201, 12.78872], [47.0595, 12.79627], [47.05591, 12.80563], [47.05761, 12.81272], [47.06282, 12.81775], [47.06833, 12.81979], [47.06333, 12.82625], [47.06458, 12.82712], [47.06361, 12.8302], [47.06689, 12.84088], [47.06965, 12.84051], [47.07312, 12.84027], [47.07503, 12.8399], [47.07915, 12.84078], [47.0812, 12.84263], [47.0866, 12.8393], [47.09209, 12.83692], [47.09969, 12.83672], [47.10945, 12.83345], [47.11301, 12.83093], [47.11778, 12.83158], [47.1167, 12.8238], [47.11926, 12.82968], [47.12166, 12.83118], [47.12301, 12.83192], [47.12359, 12.83177], [47.12358, 12.83181], [47.12292, 12.83185], [47.12162, 12.8311], [47.11922, 12.82953], [47.11973, 12.8273], [47.11912, 12.82487], [47.12184, 12.82275], [47.12519, 12.81872], [47.12656, 12.8139], [47.12836, 12.81243], [47.12473, 12.8112], [47.12345, 12.80888], [47.12475, 12.80847], [47.1334, 12.80879], [47.13399, 12.8075], [47.14282, 12.81404], [47.14736, 12.81383], [47.15109, 12.81547], [47.14992, 12.81252], [47.15249, 12.81317], [47.15127, 12.80994], [47.1558, 12.81408], [47.16131, 12.81477], [47.16905, 12.81358], [47.17766, 12.81932], [47.18606, 12.8243], [47.19564, 12.83203], [47.20622, 12.8328], [47.21745, 12.82764], [47.22654, 12.82643], [47.23555, 12.82631], [47.24966, 12.82754], [47.2585, 12.82452], [47.2668, 12.82417], [47.27751, 12.82619], [47.28027, 12.82628], [47.28452, 12.81073], [47.29031, 12.80594], [47.29513, 12.7968], [47.29893, 12.79421], [47.30555, 12.78842], [47.31443, 12.79408], [47.3234, 12.79672], [47.31307, 12.79382], [47.30514, 12.78845], [47.29933, 12.78958], [47.2968, 12.78265], [47.295, 12.77227], [47.29249, 12.74967], [47.28988, 12.74139], [47.29165, 12.72437], [47.28981, 12.71489], [47.2891, 12.69218], [47.28519, 12.66833], [47.28467, 12.64608], [47.28363, 12.63376], [47.28586, 12.61361], [47.28557, 12.59449], [47.28164, 12.57414], [47.28353, 12.56578], [47.28469, 12.54604], [47.28687, 12.5342], [47.28713, 12.5225], [47.28555, 12.49981], [47.28495, 12.49066], [47.27888, 12.48843], [47.27002, 12.48603], [47.25855, 12.48349], [47.24728, 12.48806], [47.23628, 12.49327], [47.22517, 12.49123], [47.22341, 12.49093], [47.21726, 12.50249], [47.20606, 12.51372], [47.19156, 12.52132], [47.18074, 12.52892], [47.17189, 12.53353], [47.16094, 12.53682], [47.11853, 12.50446], [47.11623, 12.50571], [47.117, 12.50244], [47.10214, 12.51029], [47.09086, 12.52386], [47.08287, 12.53079], [47.07012, 12.5322], [47.05865, 12.52631], [47.04573, 12.5156], [47.03554, 12.51943], [47.02435, 12.52608], [47.01257, 12.53922], [47.001, 12.54225], [46.99247, 12.54325], [46.98174, 12.55027], [46.97131, 12.55152], [46.95849, 12.55526], [46.94674, 12.56542], [46.93656, 12.5726], [46.93021, 12.57414], [46.92527, 12.57078], [46.92419, 12.55799], [46.92374, 12.5486], [46.92358, 12.53708], [46.92123, 12.52017], [46.91851, 12.50541], [46.91997, 12.48732], [46.92654, 12.46559], [46.92545, 12.45292], [46.9216, 12.4352], [46.92031, 12.41558], [46.91741, 12.39884], [46.91447, 12.37877], [46.91604, 12.36834], [46.91638, 12.35369], [46.916, 12.34071], [46.91666, 12.33054], [46.91517, 12.32429], [46.91357, 12.31386], [46.91217, 12.30532], [46.91312, 12.29661], [46.91276, 12.28998], [46.91697, 12.27631], [46.91699, 12.26141], [46.91547, 12.25478], [46.91369, 12.25731], [46.91488, 12.24665], [46.91357, 12.24909], [46.91222, 12.25222], [46.91275, 12.24631], [46.9097, 12.23803], [46.91013, 12.23671], [46.90385, 12.22871], [46.89751, 12.21845], [46.89305, 12.21089], [46.88822, 12.20253], [46.88922, 12.19802], [46.88756, 12.19752], [46.88855, 12.19651], [46.88747, 12.1967], [46.88984, 12.19626], [46.89113, 12.19141], [46.88972, 12.19258], [46.89129, 12.18717], [46.88928, 12.1879], [46.88792, 12.17797], [46.88599, 12.17173], [46.88184, 12.16663], [46.88405, 12.15704], [46.87975, 12.14106], [46.87396, 12.12891], [46.87104, 12.11755], [46.86505, 12.10957], [46.85239, 12.09689], [46.83807, 12.08755], [46.82829, 12.08343], [46.81547, 12.07506], [46.80593, 12.06573], [46.79366, 12.05653], [46.77979, 12.04352], [46.77349, 12.04255], [46.76779, 12.04337], [46.76185, 12.04805], [46.76111, 12.05427], [46.76248, 12.06613], [46.76142, 12.07487], [46.76122, 12.09114], [46.75781, 12.09599], [46.75155, 12.11075], [46.74598, 12.12505], [46.74375, 12.13326], [46.73869, 12.15443], [46.73642, 12.16621], [46.73525, 12.1885], [46.7307, 12.20532], [46.7288, 12.22004], [46.72252, 12.22324], [46.71316, 12.22382], [46.70719, 12.22056], [46.6982, 12.2223], [46.69132, 12.22386], [46.67348, 12.22165], [46.65651, 12.2256], [46.6464, 12.23217], [46.63413, 12.23096], [46.62279, 12.22258], [46.61251, 12.22686], [46.61181, 12.22843], [46.61027, 12.23252], [46.59993, 12.24242], [46.59981, 12.24672], [46.59604, 12.25201], [46.58559, 12.25418], [46.57994, 12.25204], [46.56691, 12.24539], [46.56472, 12.24248], [46.56079, 12.23626], [46.55618, 12.22696], [46.55857, 12.2168], [46.55647, 12.2074], [46.55725, 12.19715], [46.55241, 12.18947], [46.55062, 12.18551], [46.5478, 12.17095], [46.54743, 12.16608], [46.54575, 12.16549], [46.54196, 12.15982], [46.54224, 12.15482], [46.54269, 12.15151], [46.54397, 12.14854], [46.54093, 12.1397], [46.54026, 12.13509], [46.53727, 12.13622], [46.53727, 12.13894]], [[46.53727, 12.13894], [46.53414, 12.13697], [46.53744, 12.13491], [46.53944, 12.13063], [46.53977, 12.12698], [46.53896, 12.12383], [46.53411, 12.12301], [46.52937, 12.12111], [46.52389, 12.1199], [46.52116, 12.11494], [46.52308, 12.11645], [46.52257, 12.11468], [46.52412, 12.11346], [46.52143, 12.11043], [46.5193, 12.10383], [46.51499, 12.09323], [46.51318, 12.08916], [46.51201, 12.08855], [46.51154, 12.08516], [46.50533, 12.07684], [46.50295, 12.07574], [46.50223, 12.07548], [46.49904, 12.07564], [46.49513, 12.07574], [46.49287, 12.07364], [46.49217, 12.07198], [46.49052, 12.06947], [46.48973, 12.06673], [46.48985, 12.06384], [46.49158, 12.06284], [46.48854, 12.05847], [46.48326, 12.05993], [46.48162, 12.0564], [46.48458, 12.05108], [46.4844, 12.04916], [46.48508, 12.04559], [46.48572, 12.04041], [46.48774, 12.03713], [46.48754, 12.03575], [46.48441, 12.03608], [46.4822, 12.03518], [46.48118, 12.03338], [46.4803, 12.03264], [46.47891, 12.03187], [46.47636, 12.03376], [46.4752, 12.03892], [46.47469, 12.03314], [46.47479, 12.03129], [46.47148, 12.0304], [46.47089, 12.03228], [46.47033, 12.0321], [46.46719, 12.03109], [46.46642, 12.03025], [46.46014, 12.03166], [46.45441, 12.03274], [46.45073, 12.04246], [46.44709, 12.05136], [46.44582, 12.05952], [46.44203, 12.06439], [46.43841, 12.06887], [46.43631, 12.07337], [46.43535, 12.07948], [46.43443, 12.09631], [46.4291, 12.11005], [46.42847, 12.11131], [46.427, 12.11202], [46.42592, 12.10859], [46.42108, 12.10564], [46.41853, 12.09561], [46.41796, 12.10024], [46.41258, 12.0994], [46.40876, 12.10199], [46.408, 12.10065], [46.40476, 12.10116], [46.39987, 12.10279], [46.39826, 12.10322], [46.39696, 12.10375], [46.39595, 12.10385], [46.39357, 12.1022], [46.39095, 12.11017], [46.38367, 12.11873], [46.3811, 12.12169], [46.37756, 12.12438], [46.37362, 12.12838], [46.37305, 12.13512], [46.36988, 12.13898], [46.36476, 12.14119], [46.36165, 12.13968], [46.35784, 12.14395], [46.35354, 12.14938], [46.35147, 12.15791], [46.34848, 12.16682], [46.34606, 12.17418], [46.3455, 12.18218], [46.34587, 12.19279], [46.34199, 12.20336], [46.34045, 12.21818], [46.33767, 12.22754], [46.33277, 12.23181], [46.32611, 12.23305], [46.32019, 12.2341], [46.31244, 12.22685], [46.30546, 12.22388], [46.30084, 12.23139], [46.29524, 12.2363], [46.2928, 12.24012], [46.28272, 12.24215], [46.27714, 12.24801], [46.27331, 12.25121], [46.27071, 12.25584], [46.26921, 12.26245], [46.2689, 12.26679], [46.26708, 12.27327], [46.26429, 12.276], [46.26318, 12.28368], [46.26422, 12.30043], [46.26569, 12.30045], [46.26671, 12.30239], [46.26795, 12.31076], [46.27605, 12.30824], [46.2796, 12.31173], [46.28091, 12.31273], [46.27439, 12.31482], [46.2733, 12.31551], [46.27612, 12.31713], [46.26998, 12.31746], [46.2679, 12.32514], [46.26939, 12.33184], [46.26767, 12.32508], [46.27027, 12.3174], [46.27456, 12.31673], [46.27409, 12.3157], [46.27475, 12.31503], [46.28084, 12.3124], [46.27972, 12.31154], [46.27549, 12.3083], [46.26786, 12.30897], [46.26626, 12.3025], [46.26009, 12.30035], [46.24876, 12.29862], [46.24002, 12.29539], [46.22893, 12.28906], [46.22441, 12.28671], [46.20902, 12.28583], [46.19565, 12.28681], [46.18991, 12.28658], [46.18169, 12.28431], [46.18029, 12.28019], [46.18131, 12.2733], [46.1746, 12.2627], [46.16805, 12.24802], [46.15883, 12.2372], [46.15197, 12.22976], [46.14861, 12.22627], [46.14674, 12.22022], [46.14417, 12.21292], [46.14469, 12.20474], [46.14258, 12.19953], [46.14154, 12.19085], [46.1403, 12.18026], [46.1411, 12.1703], [46.14234, 12.15211], [46.14204, 12.14292], [46.14614, 12.13064], [46.15166, 12.12762], [46.15615, 12.12427], [46.15885, 12.12177], [46.1611, 12.11727], [46.16342, 12.11066], [46.15967, 12.10263], [46.15721, 12.09309], [46.15532, 12.08641], [46.15259, 12.08057], [46.15484, 12.08203], [46.15921, 12.08234], [46.16083, 12.07614], [46.16335, 12.06414], [46.16666, 12.05802], [46.17117, 12.05557], [46.17617, 12.05313], [46.18267, 12.04705], [46.18723, 12.04119], [46.19057, 12.03667], [46.19469, 12.0366], [46.19886, 12.03416], [46.20079, 12.02909], [46.2033, 12.02052], [46.20468, 12.015], [46.20658, 12.00112], [46.20671, 11.99373], [46.21034, 11.98988], [46.21572, 11.99306], [46.2199, 11.99574], [46.22185, 11.99747], [46.2233, 11.99765], [46.22449, 11.99511], [46.22511, 12.00131], [46.22543, 11.99663], [46.22606, 11.99952], [46.22815, 12.00525], [46.23, 12.00986], [46.23551, 12.01477], [46.24087, 12.01889], [46.24563, 12.02069], [46.2505, 12.02329], [46.25657, 12.02719], [46.26125, 12.02815], [46.25716, 12.03157], [46.26005, 12.0323], [46.25758, 12.03381], [46.26351, 12.03402], [46.26696, 12.03409], [46.2655, 12.03612], [46.26963, 12.03542], [46.27148, 12.03697], [46.27701, 12.0304], [46.28714, 12.02359], [46.29478, 12.01927], [46.30488, 12.01323], [46.31241, 12.00765], [46.32132, 12.00379], [46.33464, 11.98575], [46.34115, 11.9774], [46.3449, 11.97219], [46.34966, 11.96848], [46.35351, 11.96988], [46.36306, 11.97452], [46.37113, 11.97796], [46.37945, 11.98707], [46.38605, 11.9962], [46.38901, 11.9989], [46.38969, 11.99707], [46.39566, 12.00686], [46.39857, 12.01385], [46.40506, 12.02169], [46.40604, 12.02074], [46.40662, 12.0252], [46.4073, 12.0241], [46.40668, 12.02381], [46.40819, 12.01958], [46.41366, 12.016], [46.4249, 12.00756], [46.43544, 11.99629], [46.43967, 11.99347], [46.43991, 11.99498], [46.43859, 11.99775], [46.4402, 11.99854], [46.44175, 11.99636], [46.44417, 11.99209], [46.44241, 11.99767], [46.44626, 11.9934], [46.45235, 11.99236], [46.45617, 11.98906], [46.45923, 11.99222], [46.45923, 11.98759], [46.46418, 11.98022], [46.47269, 11.98078], [46.47814, 11.98598], [46.48278, 11.98878], [46.48786, 11.98875], [46.48957, 11.9876], [46.48886, 11.98941], [46.49036, 11.98978], [46.49713, 11.98875], [46.4962, 11.99019], [46.50029, 11.99022], [46.50037, 11.99169], [46.50112, 11.99343], [46.50811, 11.99904], [46.50987, 12.00095], [46.50994, 11.99507], [46.51427, 12.0021], [46.51452, 12.00099], [46.51317, 11.99668], [46.51708, 12.00246], [46.51754, 12.00571], [46.51892, 12.00457], [46.51989, 12.00518], [46.51922, 12.01083], [46.51953, 12.01966], [46.51995, 12.02269], [46.51879, 12.02747], [46.51893, 12.03148], [46.52045, 12.03413], [46.52108, 12.03877], [46.52135, 12.04159], [46.52234, 12.06184], [46.52101, 12.07506], [46.52163, 12.0844], [46.51989, 12.09412], [46.5217, 12.09653], [46.52118, 12.10293], [46.52267, 12.1064], [46.52401, 12.10768], [46.52411, 12.11197], [46.52338, 12.11405], [46.52194, 12.11432], [46.52082, 12.11451], [46.52249, 12.12016], [46.52741, 12.1209], [46.53302, 12.12168], [46.53732, 12.12497], [46.53891, 12.12515], [46.53947, 12.1301], [46.53982, 12.13187], [46.53731, 12.13618], [46.53727, 12.13894]], [[46.53727, 12.13894], [46.5352, 12.13853], [46.53486, 12.13566], [46.53736, 12.13376], [46.54004, 12.12999], [46.54375, 12.12824], [46.54381, 12.12776], [46.54242, 12.12472], [46.53909, 12.12383], [46.5361, 12.12413], [46.53285, 12.12145], [46.52815, 12.12143], [46.52399, 12.11987], [46.52171, 12.11762], [46.52116, 12.11463], [46.52201, 12.11517], [46.52252, 12.11457], [46.52299, 12.11377], [46.52317, 12.1111], [46.52348, 12.10911], [46.52278, 12.10691], [46.5229, 12.10623], [46.52106, 12.10249], [46.52249, 12.0986], [46.52128, 12.0954], [46.52031, 12.09322], [46.5218, 12.08418], [46.52066, 12.07572], [46.52215, 12.06781], [46.52307, 12.05678], [46.52114, 12.0411], [46.52102, 12.03909], [46.52036, 12.03651], [46.52014, 12.03196], [46.51892, 12.03141], [46.51801, 12.02885], [46.51974, 12.02352], [46.52037, 12.02336], [46.51959, 12.01948], [46.51942, 12.01332], [46.51913, 12.00806], [46.52252, 12.00262], [46.52917, 11.98981], [46.53307, 11.98865], [46.53374, 11.98791], [46.53466, 11.98747], [46.53519, 11.98421], [46.54037, 11.98291], [46.54286, 11.97488], [46.54612, 11.97348], [46.54893, 11.97709], [46.55201, 11.97815], [46.55194, 11.97669], [46.55411, 11.97784], [46.55067, 11.97317], [46.54942, 11.96792], [46.55143, 11.96812], [46.55788, 11.9621], [46.56079, 11.95544], [46.56387, 11.94769], [46.56558, 11.94332], [46.56755, 11.94052], [46.56943, 11.9356], [46.56944, 11.9353], [46.57196, 11.929], [46.57308, 11.92857], [46.57619, 11.92537], [46.57885, 11.92111], [46.58137, 11.91834], [46.58376, 11.91168], [46.58401, 11.90895], [46.58395, 11.90736], [46.58541, 11.90652], [46.58434, 11.90415], [46.58025, 11.89906], [46.57688, 11.89446], [46.5732, 11.89184], [46.56821, 11.88845], [46.56457, 11.88664], [46.55932, 11.88107], [46.55263, 11.87461], [46.55131, 11.86897], [46.55179, 11.86168], [46.55158, 11.85698], [46.55376, 11.85172], [46.55026, 11.8445], [46.54889, 11.83776], [46.54933, 11.84017], [46.54907, 11.83184], [46.55083, 11.83313], [46.55012, 11.82764], [46.54829, 11.82399], [46.54897, 11.82313], [46.54878, 11.82231], [46.54841, 11.82074], [46.54888, 11.81933], [46.54916, 11.81659], [46.5495, 11.81413], [46.5507, 11.81546], [46.55082, 11.8126], [46.55116, 11.81057], [46.54977, 11.80653], [46.54892, 11.80602], [46.54752, 11.80486], [46.54705, 11.8047], [46.54771, 11.80358], [46.54557, 11.8067], [46.54276, 11.80432], [46.54115, 11.80247], [46.53932, 11.79632], [46.53736, 11.78849], [46.53846, 11.78357], [46.53483, 11.7828], [46.53673, 11.77805], [46.53777, 11.77552], [46.53695, 11.77693], [46.53434, 11.77747], [46.53222, 11.77961], [46.53196, 11.7824], [46.5297, 11.78182], [46.52739, 11.78016], [46.52483, 11.77907], [46.52156, 11.77697], [46.52241, 11.77345], [46.5197, 11.77016], [46.51348, 11.76506], [46.5116, 11.76152], [46.50979, 11.75765], [46.50789, 11.75744], [46.50917, 11.76043], [46.50825, 11.76457], [46.50866, 11.76685], [46.50811, 11.76729], [46.50645, 11.77075], [46.50533, 11.77257], [46.50519, 11.7728], [46.50504, 11.77342], [46.50535, 11.77468], [46.50443, 11.77432], [46.50486, 11.77708], [46.50452, 11.77927], [46.50675, 11.78688], [46.50577, 11.78642], [46.50427, 11.78611], [46.50268, 11.78505], [46.50063, 11.78284], [46.50255, 11.78799], [46.50145, 11.79163], [46.497, 11.78993], [46.49592, 11.78841], [46.49502, 11.78566], [46.49307, 11.78495], [46.49162, 11.78448], [46.49169, 11.78426], [46.49195, 11.78407], [46.49181, 11.78219], [46.48976, 11.78364], [46.48711, 11.7836], [46.48755, 11.78268], [46.48291, 11.78075], [46.48068, 11.78013], [46.47954, 11.77983], [46.4777, 11.77885], [46.47913, 11.77873], [46.47723, 11.77807], [46.47828, 11.77768], [46.47732, 11.77742], [46.47822, 11.77681], [46.47583, 11.77756], [46.47379, 11.7782], [46.47539, 11.77635], [46.47606, 11.77498], [46.47473, 11.77595], [46.47253, 11.77673], [46.47043, 11.77868], [46.46599, 11.78121], [46.45981, 11.78504], [46.45789, 11.79123], [46.45677, 11.80167], [46.45857, 11.80419], [46.45805, 11.80819], [46.4561, 11.80686], [46.45905, 11.81515], [46.45928, 11.82003], [46.46187, 11.83132], [46.46221, 11.82941], [46.46312, 11.82718], [46.4636, 11.83215], [46.46391, 11.82751], [46.46469, 11.83224], [46.46777, 11.83744], [46.46731, 11.8463], [46.46707, 11.85126], [46.46362, 11.86251], [46.46292, 11.86868], [46.45995, 11.87451], [46.45679, 11.88024], [46.45414, 11.88693], [46.45497, 11.89142], [46.45508, 11.89357], [46.45442, 11.89917], [46.45146, 11.89872], [46.45146, 11.90047], [46.45256, 11.90262], [46.45205, 11.90243], [46.45098, 11.90408], [46.43983, 11.90785], [46.42938, 11.90841], [46.42863, 11.91145], [46.42577, 11.91755], [46.42577, 11.92701], [46.42265, 11.93047], [46.42158, 11.93444], [46.42237, 11.93684], [46.42402, 11.94132], [46.42574, 11.94351], [46.42697, 11.94976], [46.42822, 11.9601], [46.43237, 11.97004], [46.43298, 11.97539], [46.43224, 11.97509], [46.43616, 11.98049], [46.44048, 11.98491], [46.44347, 11.98479], [46.4504, 11.98287], [46.45513, 11.98036], [46.45878, 11.97942], [46.46126, 11.97483], [46.46275, 11.97079], [46.46653, 11.97003], [46.4689, 11.96491], [46.46987, 11.96497], [46.47002, 11.96544], [46.47066, 11.96582], [46.47111, 11.97025], [46.47205, 11.96522], [46.47234, 11.96515], [46.47302, 11.96922], [46.47467, 11.9715], [46.47531, 11.97385], [46.47466, 11.96972], [46.47462, 11.96612], [46.47632, 11.97228], [46.47786, 11.97442], [46.47939, 11.97599], [46.48039, 11.97726], [46.48064, 11.97918], [46.48572, 11.98401], [46.48693, 11.98541], [46.48798, 11.986], [46.48787, 11.98951], [46.48776, 11.98718], [46.48968, 11.98758], [46.48879, 11.98925], [46.49169, 11.98864], [46.49054, 11.98999], [46.49745, 11.98869], [46.49699, 11.9897], [46.49768, 11.99013], [46.50333, 11.99196], [46.49913, 11.99146], [46.49942, 11.99208], [46.50599, 11.99732], [46.50895, 11.99997], [46.50989, 12.0011], [46.50987, 11.99511], [46.51262, 12.00034], [46.51459, 12.00173], [46.51294, 11.99614], [46.51404, 11.99807], [46.51716, 12.00259], [46.51784, 12.00499], [46.51779, 12.00561], [46.51997, 12.00373], [46.52002, 12.00523], [46.51889, 12.00955], [46.52074, 12.01805], [46.52025, 12.02095], [46.51962, 12.02245], [46.51985, 12.02756], [46.51884, 12.03007], [46.51949, 12.03112], [46.52067, 12.03534], [46.52039, 12.03784], [46.52046, 12.03849], [46.52213, 12.04812], [46.52234, 12.06299], [46.52106, 12.07208], [46.52142, 12.08104], [46.52069, 12.08496], [46.52016, 12.09525], [46.52123, 12.09674], [46.52146, 12.10058], [46.52228, 12.10336], [46.52259, 12.10618], [46.52394, 12.10743], [46.52224, 12.109], [46.52435, 12.11326], [46.52341, 12.11418], [46.52151, 12.1133], [46.52291, 12.11658], [46.52048, 12.1146], [46.52259, 12.12023], [46.52672, 12.12055], [46.53149, 12.12125], [46.53394, 12.12284], [46.53751, 12.125], [46.54155, 12.12483], [46.54336, 12.12677], [46.5445, 12.12765], [46.54242, 12.12895], [46.53974, 12.13167], [46.5384, 12.13467], [46.53656, 12.13756], [46.53727, 12.13894]], [[46.53727, 12.13894], [46.538, 12.14161], [46.53868, 12.13863], [46.5443, 12.13645], [46.54942, 12.13078], [46.55617, 12.12799], [46.56661, 12.12132], [46.58534, 12.11317], [46.59619, 12.11022], [46.60185, 12.10773], [46.60067, 12.11004], [46.59954, 12.1128], [46.60072, 12.12469], [46.60375, 12.14295], [46.61083, 12.1609], [46.6186, 12.17986], [46.6242, 12.19528], [46.62241, 12.2072], [46.62074, 12.21835], [46.62838, 12.22853], [46.64062, 12.23186], [46.65505, 12.22811], [46.67158, 12.2215], [46.69013, 12.22376], [46.69767, 12.22195], [46.70719, 12.22056], [46.71366, 12.22362], [46.72303, 12.22259], [46.72877, 12.22182], [46.73082, 12.22729], [46.72671, 12.24128], [46.72883, 12.26114], [46.7341, 12.2753], [46.73545, 12.28664], [46.73209, 12.29865], [46.72949, 12.31894], [46.73296, 12.33658], [46.73531, 12.34883], [46.74013, 12.36885], [46.7413, 12.3862], [46.74567, 12.39585], [46.74684, 12.41433], [46.74954, 12.42127], [46.7496, 12.43546], [46.74983, 12.44797], [46.74941, 12.46821], [46.74973, 12.49439], [46.75689, 12.51428], [46.75853, 12.53601], [46.76061, 12.56039], [46.76865, 12.5852], [46.77061, 12.60331], [46.77989, 12.64049], [46.7833, 12.65952], [46.78527, 12.67696], [46.79016, 12.70514], [46.79426, 12.73017], [46.80225, 12.74443], [46.81438, 12.75252], [46.82632, 12.75658], [46.82761, 12.76383], [46.83085, 12.77567], [46.8306, 12.78648], [46.82981, 12.80106], [46.82698, 12.81483], [46.8261, 12.83214], [46.81636, 12.84029], [46.80827, 12.85577], [46.79631, 12.87438], [46.77895, 12.89673], [46.76605, 12.93053], [46.75361, 12.95747], [46.7477, 12.96875], [46.75048, 12.98084], [46.74623, 12.99724], [46.74253, 13.01389], [46.74071, 13.0338], [46.7391, 13.06028], [46.73729, 13.07687], [46.73848, 13.08311], [46.73846, 13.09389], [46.74379, 13.10768], [46.74445, 13.11845], [46.74104, 13.13123], [46.74145, 13.14446], [46.74718, 13.15207], [46.74871, 13.16356], [46.74861, 13.1699], [46.75028, 13.17658], [46.75041, 13.18294], [46.75243, 13.19809], [46.75287, 13.21007], [46.75107, 13.22754], [46.75241, 13.25732], [46.75684, 13.29346], [46.7589, 13.31938], [46.77583, 13.34395], [46.78715, 13.35129], [46.8026, 13.354], [46.81989, 13.35343], [46.82775, 13.36477], [46.83244, 13.38689], [46.83134, 13.41812], [46.83039, 13.42822], [46.83096, 13.44567], [46.83077, 13.46012], [46.8313, 13.47614], [46.83719, 13.48834], [46.84324, 13.49498], [46.84976, 13.49474], [46.85133, 13.49394], [46.84925, 13.49976], [46.85029, 13.50064], [46.85624, 13.50416], [46.86077, 13.5042], [46.86743, 13.50639], [46.87853, 13.51205], [46.8872, 13.52088], [46.89063, 13.52299], [46.90297, 13.53065], [46.90626, 13.53698], [46.90987, 13.5466], [46.91701, 13.56152], [46.92184, 13.57336], [46.92817, 13.58511], [46.93079, 13.59176], [46.93424, 13.59978], [46.94293, 13.60691], [46.9499, 13.61083], [46.95764, 13.61426], [46.96403, 13.61881], [46.96858, 13.62118], [46.98046, 13.62262], [46.99658, 13.619], [47.00654, 13.61844], [47.01785, 13.61489], [47.0256, 13.60806], [47.03255, 13.60383], [47.04021, 13.61137], [47.04511, 13.61718], [47.04897, 13.61664], [47.05605, 13.61738], [47.06324, 13.61361], [47.07598, 13.61803], [47.0844, 13.62127], [47.08813, 13.6385], [47.09512, 13.6408], [47.09692, 13.66116], [47.09296, 13.67823], [47.0922, 13.69765], [47.10426, 13.71514], [47.10809, 13.72815], [47.11233, 13.73929], [47.11443, 13.74617], [47.11806, 13.76159], [47.12699, 13.77893], [47.13257, 13.79148], [47.13471, 13.8023], [47.12955, 13.81053], [47.13132, 13.82369], [47.13473, 13.838], [47.136, 13.85757], [47.13917, 13.87083], [47.1439, 13.88671], [47.14652, 13.90595], [47.14903, 13.91914], [47.1502, 13.93451], [47.15471, 13.95156], [47.16004, 13.96882], [47.16481, 14.00069], [47.1629, 14.02181], [47.16278, 14.03689], [47.15855, 14.04926], [47.15963, 14.06549], [47.15885, 14.0783], [47.15691, 14.09018], [47.15069, 14.11315], [47.14505, 14.12391], [47.14003, 14.13928], [47.13277, 14.15765], [47.12048, 14.17094], [47.11361, 14.17011], [47.1102, 14.17128], [47.10851, 14.18099], [47.11182, 14.18546], [47.10938, 14.20007], [47.11921, 14.22258], [47.12843, 14.23744], [47.13658, 14.26014], [47.13489, 14.29565], [47.13251, 14.31652], [47.13035, 14.3416], [47.1355, 14.36136], [47.1418, 14.37005], [47.14818, 14.37874], [47.15739, 14.39536], [47.15171, 14.41275], [47.16045, 14.42291], [47.17782, 14.42795], [47.18367, 14.43213], [47.19324, 14.43933], [47.19348, 14.44017], [47.19884, 14.44712], [47.20627, 14.45566], [47.20873, 14.48017], [47.20604, 14.49426], [47.20595, 14.49852], [47.21193, 14.5033], [47.21094, 14.52336], [47.21206, 14.53599], [47.21005, 14.55854], [47.21075, 14.57317], [47.21618, 14.57544], [47.22034, 14.58414], [47.22198, 14.59863], [47.21732, 14.61391], [47.20663, 14.63279], [47.2061, 14.65755], [47.20623, 14.67001], [47.20888, 14.68215], [47.21225, 14.71644], [47.21313, 14.73762], [47.21606, 14.76101], [47.21951, 14.76202], [47.22122, 14.76389], [47.21924, 14.76215], [47.21508, 14.77201], [47.21369, 14.78797], [47.21689, 14.79392], [47.22039, 14.80487], [47.21829, 14.81553], [47.21937, 14.82881], [47.22464, 14.83043], [47.23665, 14.8325], [47.24851, 14.84643], [47.25134, 14.86864], [47.2585, 14.89904], [47.27859, 14.91896], [47.2979, 14.93467], [47.3087, 14.94141], [47.3248, 14.96798], [47.33272, 14.98076], [47.33982, 14.99984], [47.33906, 15.01258], [47.33393, 15.02293], [47.34154, 15.03201], [47.34377, 15.05042], [47.35522, 15.05323], [47.36388, 15.06896], [47.36823, 15.08065], [47.3731, 15.08734], [47.37767, 15.09829], [47.38359, 15.11458], [47.38575, 15.12849], [47.39211, 15.14748], [47.39764, 15.16846], [47.40581, 15.1959], [47.40494, 15.22], [47.40033, 15.23181], [47.40168, 15.246], [47.40597, 15.26153], [47.40654, 15.27434], [47.41029, 15.27403], [47.41817, 15.27458], [47.42733, 15.26926], [47.43368, 15.27233], [47.43796, 15.28836], [47.44486, 15.29531], [47.44373, 15.28773], [47.44894, 15.27747], [47.45371, 15.2648], [47.46026, 15.25554], [47.47481, 15.25439], [47.48062, 15.2472], [47.48701, 15.23936], [47.49286, 15.23711], [47.49916, 15.23141], [47.505, 15.23194], [47.50924, 15.22768], [47.51284, 15.2212], [47.51845, 15.22061], [47.52306, 15.2328], [47.53404, 15.23601], [47.54095, 15.24917], [47.5488, 15.26449], [47.54766, 15.28084], [47.54072, 15.29709], [47.5466, 15.31783], [47.55826, 15.33686], [47.56334, 15.35219], [47.56988, 15.37125], [47.57438, 15.38445], [47.57909, 15.40477], [47.57636, 15.41411], [47.57755, 15.42406], [47.58124, 15.42875], [47.57968, 15.44023], [47.58439, 15.45904], [47.58748, 15.46875], [47.58348, 15.475], [47.57884, 15.48951], [47.56734, 15.50186], [47.5504, 15.5048], [47.54029, 15.5188], [47.53759, 15.52706], [47.54375, 15.54339], [47.54303, 15.55664], [47.54501, 15.56133]], [[47.54501, 15.56133], [47.55486, 15.57893], [47.55823, 15.59268], [47.56018, 15.60949], [47.56826, 15.6201], [47.57343, 15.63478], [47.58235, 15.64778], [47.59109, 15.66121], [47.59431, 15.66463], [47.60545, 15.67091], [47.6086, 15.67078], [47.61767, 15.66742], [47.6261, 15.65965], [47.63727, 15.64866], [47.64729, 15.63864], [47.65104, 15.63356], [47.65752, 15.64542], [47.65649, 15.6652], [47.65591, 15.68713], [47.66157, 15.70152], [47.66216, 15.70714], [47.66568, 15.71449], [47.67586, 15.72309], [47.67222, 15.72877], [47.6701, 15.73597], [47.66798, 15.74268], [47.6674, 15.74725], [47.66965, 15.75484], [47.67162, 15.74699], [47.67484, 15.74754], [47.67439, 15.75707], [47.67419, 15.76605], [47.67823, 15.7771], [47.6849, 15.79137], [47.6888, 15.80034], [47.69431, 15.81349], [47.69967, 15.81834], [47.70387, 15.81381], [47.71279, 15.80581], [47.7208, 15.8033], [47.72382, 15.80176], [47.72808, 15.79745], [47.73412, 15.79206], [47.73723, 15.78324], [47.74315, 15.77665], [47.7476, 15.76658], [47.74907, 15.75498], [47.75477, 15.74863], [47.75959, 15.75029], [47.76291, 15.74571], [47.76621, 15.73804], [47.77037, 15.73381], [47.77581, 15.73252], [47.78537, 15.73294], [47.78851, 15.72879], [47.79258, 15.72004], [47.80078, 15.70972], [47.81006, 15.70635], [47.81816, 15.69762], [47.82487, 15.69157], [47.83778, 15.69279], [47.84848, 15.69664], [47.85908, 15.69318], [47.86686, 15.70132], [47.87178, 15.69803], [47.88824, 15.68511], [47.89727, 15.6859], [47.90599, 15.68135], [47.91248, 15.67483], [47.91837, 15.67724], [47.9277, 15.68515], [47.93753, 15.6981], [47.94249, 15.70379], [47.94864, 15.71481], [47.95622, 15.71889], [47.96574, 15.72654], [47.97555, 15.73038], [47.98148, 15.73875], [47.99236, 15.74617], [48.00091, 15.74142], [48.0089, 15.73815], [48.01615, 15.73015], [48.02829, 15.72288], [48.03647, 15.72505], [48.04246, 15.7388], [48.03937, 15.75882], [48.03516, 15.77456], [48.03535, 15.79818], [48.04904, 15.79531], [48.05597, 15.80943], [48.0579, 15.82911], [48.06177, 15.84032], [48.06532, 15.84579], [48.06744, 15.85692], [48.08034, 15.86313], [48.08958, 15.87134], [48.09781, 15.87799], [48.1069, 15.88113], [48.11116, 15.88352], [48.11646, 15.88529], [48.12413, 15.89789], [48.1301, 15.91056], [48.13632, 15.91138], [48.14362, 15.90832], [48.15237, 15.90565], [48.15679, 15.9017], [48.16413, 15.89144], [48.17294, 15.88784], [48.18217, 15.88764], [48.19253, 15.8942], [48.19982, 15.90075], [48.20715, 15.90763], [48.21489, 15.91391], [48.22998, 15.91899], [48.24345, 15.92678], [48.25465, 15.93402], [48.26307, 15.9448], [48.27062, 15.96017], [48.27057, 15.97271], [48.28069, 15.99995], [48.2931, 16.00656], [48.30457, 16.01358], [48.31917, 16.02157], [48.32374, 16.02743], [48.32732, 16.02748], [48.33731, 16.03285], [48.33856, 16.05965], [48.36027, 16.05725], [48.36405, 16.05697], [48.37103, 16.07155], [48.38554, 16.08717], [48.39371, 16.10266], [48.3937, 16.1158], [48.40027, 16.13766], [48.4048, 16.1458], [48.41473, 16.15853], [48.42862, 16.16781], [48.43484, 16.16552], [48.44868, 16.17354], [48.46463, 16.1985], [48.48465, 16.22048], [48.49606, 16.23152], [48.50383, 16.23671], [48.52239, 16.22309], [48.53869, 16.22177], [48.5464, 16.21707], [48.55887, 16.22108], [48.56954, 16.22891], [48.58613, 16.24012], [48.59381, 16.23915], [48.61323, 16.23988], [48.63092, 16.23858], [48.63363, 16.25565], [48.63694, 16.28274], [48.64936, 16.29887], [48.6625, 16.32938], [48.66856, 16.34682], [48.67592, 16.35115], [48.7016, 16.3634], [48.71268, 16.37353], [48.71613, 16.37995], [48.72191, 16.38514], [48.72994, 16.38348], [48.75194, 16.38045], [48.762, 16.38362], [48.77997, 16.39069], [48.79884, 16.39599], [48.82088, 16.39963], [48.83043, 16.39882], [48.83043, 16.4068], [48.83684, 16.44046], [48.85386, 16.4794], [48.86588, 16.48941], [48.87938, 16.49567], [48.89798, 16.51694], [48.92291, 16.52562], [48.93109, 16.53421], [48.9493, 16.52411], [48.96933, 16.52413], [48.99442, 16.54822], [49.04265, 16.54329], [49.07803, 16.56339], [49.09399, 16.59597], [49.11826, 16.60462], [49.15693, 16.60028], [49.15998, 16.59976], [49.16181, 16.56288], [49.16909, 16.55036], [49.18303, 16.56559], [49.19157, 16.56969], [49.20412, 16.5684], [49.21333, 16.57578], [49.22013, 16.58327], [49.23049, 16.58094], [49.23826, 16.58962], [49.25961, 16.57766], [49.28298, 16.56709], [49.30389, 16.55552], [49.33074, 16.55331], [49.35289, 16.55062], [49.36987, 16.56779], [49.395, 16.58312], [49.41099, 16.58539], [49.41872, 16.58562], [49.45471, 16.57347], [49.48544, 16.5861], [49.49468, 16.58853], [49.50839, 16.58606], [49.52353, 16.5855], [49.54128, 16.5726], [49.54704, 16.57707], [49.55789, 16.57533], [49.57054, 16.56158], [49.5804, 16.55127], [49.60154, 16.53307], [49.61803, 16.53112], [49.63272, 16.52198], [49.64606, 16.51729], [49.65824, 16.5166], [49.70322, 16.49041], [49.74007, 16.48298], [49.75813, 16.48761], [49.77384, 16.49048], [49.79221, 16.49053], [49.82189, 16.49652], [49.84402, 16.51015], [49.86044, 16.52775], [49.87344, 16.54829], [49.8903, 16.57193], [49.899, 16.58943], [49.90801, 16.60419], [49.90968, 16.61218], [49.91824, 16.62101], [49.93776, 16.63193], [49.9552, 16.62508], [49.96202, 16.6123], [49.97016, 16.6084], [49.98023, 16.60242], [49.99357, 16.59306], [50.0066, 16.58851], [50.01472, 16.5789], [50.02085, 16.58817], [50.03238, 16.60215], [50.04116, 16.60428], [50.04834, 16.61133], [50.05277, 16.61682], [50.06002, 16.61658], [50.06993, 16.61178], [50.07706, 16.61609], [50.08628, 16.6261], [50.09757, 16.62719], [50.09872, 16.64188], [50.09713, 16.66295], [50.09798, 16.6813], [50.08907, 16.70759], [50.10198, 16.70271], [50.11028, 16.69445], [50.11867, 16.68479], [50.12536, 16.67144], [50.14137, 16.6632], [50.14845, 16.66735], [50.1667, 16.66829], [50.18453, 16.66957], [50.20259, 16.67374], [50.21504, 16.68081], [50.22511, 16.67771], [50.24763, 16.66833], [50.26926, 16.65851], [50.28085, 16.64983], [50.30508, 16.6602], [50.32869, 16.66151], [50.34895, 16.66438], [50.367, 16.67245], [50.37908, 16.67119], [50.39561, 16.65723], [50.39765, 16.65978], [50.40189, 16.66035], [50.42028, 16.66069], [50.421, 16.66093], [50.43019, 16.65666], [50.43445, 16.66153], [50.4387, 16.66069], [50.4488, 16.66026], [50.45872, 16.67295], [50.46832, 16.69352], [50.48096, 16.71069], [50.49127, 16.72027], [50.50529, 16.73341], [50.5111, 16.75826], [50.53921, 16.79225], [50.55873, 16.79294], [50.57824, 16.80038], [50.59125, 16.80719], [50.60503, 16.8121], [50.62035, 16.828], [50.63986, 16.82524], [50.65735, 16.8284], [50.67261, 16.8305], [50.68961, 16.82047], [50.70618, 16.82712], [50.72342, 16.82586], [50.73982, 16.8398], [50.75689, 16.8488], [50.77219, 16.83857], [50.79092, 16.84337], [50.79799, 16.82903], [50.81386, 16.80372]]];
+
+// ─── MAP ───
+const map = L.map('map', { scrollWheelZoom: false }).setView([47.8, 13.5], 7);
+
+document.getElementById('map').addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
+document.getElementById('map').addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 17
+}).addTo(map);
+
+const polylines = [];
+const allBounds = L.latLngBounds();
+
+tracks.forEach((track, i) => {
+  const latlngs = track.map(p => [p[0], p[1]]);
+  latlngs.forEach(ll => allBounds.extend(ll));
+
+  L.polyline(latlngs, {
+    color: '#000', weight: 5, opacity: 0.1
+  }).addTo(map);
+
+  const pl = L.polyline(latlngs, {
+    color: stageColors[i],
+    weight: 3.5,
+    opacity: 0.85,
+    lineJoin: 'round'
+  }).addTo(map);
+
+  pl.on('click', () => highlightStage(i));
+  polylines.push(pl);
+
+  const startIcon = L.divIcon({
+    className: '',
+    html: `<div style="width:22px;height:22px;border-radius:50%;background:${stageColors[i]};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:sans-serif">${i+1}</div>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11]
+  });
+  L.marker(latlngs[0], { icon: startIcon })
+    .addTo(map)
+    .bindPopup(`<b>Etap ${i+1}: ${stages[i].name}</b><br>${stages[i].route}<br><span style="color:#888">${stages[i].distance}</span>`);
+});
+
+map.fitBounds(allBounds.pad(0.05));
+
+// ─── LEGEND ───
+const legendEl = document.getElementById('mapLegend');
+stages.forEach((s, i) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="legend-dot" style="background:${stageColors[i]}"></span>Etap ${s.num}: ${s.name}`;
+  item.addEventListener('click', () => highlightStage(i));
+  legendEl.appendChild(item);
+});
+
+// ─── STAGE CARDS ───
+const cardsEl = document.getElementById('stageCards');
+stages.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'stage-card';
+  card.id = `stage-${i}`;
+
+  // Build images HTML
+  let imagesHtml = '';
+  if (s.images && s.images.length > 0) {
+    imagesHtml = `<div class="stage-images">${s.images.map(img =>
+      `<a href="${img.url}" target="_blank" rel="noopener">
+        <img src="${img.url}" alt="${img.caption || ''}" loading="lazy">
+        ${img.caption ? `<span class="img-caption">${img.caption}</span>` : ''}
+      </a>`
+    ).join('')}</div>`;
+  }
+
+  card.innerHTML = `
+    <div class="stage-number" style="background:${stageColors[i]}">${s.num}</div>
+    <div>
+      <div class="stage-header">
+        <span class="stage-name">${s.name}</span>
+        <span class="stage-distance">~${s.distance}</span>
+      </div>
+      <div class="stage-route">${s.route}</div>
+      <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.6rem;font-weight:300">${s.desc}</p>
+      <div class="stage-tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}${s.overnight ? `<span class="tag" style="background:var(--accent-light);border-color:var(--accent-light);color:var(--accent)">🏨 ${s.overnight}</span>` : ''}</div>
+      ${imagesHtml}
+    </div>
+  `;
+  card.addEventListener('click', (e) => {
+    // Don't trigger highlight when clicking images
+    if (e.target.closest('.stage-images')) return;
+    highlightStage(i);
+  });
+  cardsEl.appendChild(card);
+});
+
+// ─── HIGHLIGHT ───
+let activeStage = -1;
+
+function highlightStage(idx) {
+  polylines.forEach((pl, i) => {
+    pl.setStyle({ weight: 3.5, opacity: 0.85 });
+  });
+  document.querySelectorAll('.stage-card').forEach(c => c.style.background = '');
+
+  if (activeStage === idx) {
+    activeStage = -1;
+    map.fitBounds(allBounds.pad(0.05));
+    return;
+  }
+
+  activeStage = idx;
+
+  polylines.forEach((pl, i) => {
+    if (i !== idx) pl.setStyle({ weight: 2, opacity: 0.25 });
+    else pl.setStyle({ weight: 5, opacity: 1 });
+  });
+
+  map.fitBounds(polylines[idx].getBounds().pad(0.15));
+
+  const card = document.getElementById(`stage-${idx}`);
+  card.style.background = stageColors[idx] + '08';
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ─── BUDGET TABLE ───
+const budgetData = [
+  { category: '⛽ Paliwo (szacunek na 2260 km)' },
+  { item: 'KTM 390 Adventure (~3,7 L/100km)', amount: '~121 €', note: '~84L × 1,45 €/L' },
+  { item: 'KTM 890 Adventure (~4,5 L/100km)', amount: '~148 €', note: '~102L × 1,45 €/L' },
+  { item: 'Kawasaki Versys 1000 SE (~5,8 L/100km)', amount: '~190 €', note: '~131L × 1,45 €/L' },
+  { item: 'BMW X3 diesel (~7,5 L/100km)', amount: '~246 €', note: '~170L × 1,45 €/L' },
+  { category: '🛣️ Opłaty drogowe i przełęcze' },
+  { item: 'E-winieta Czechy 10-dniowa (BMW X3)', amount: '~13 €', note: 'motocykle zwolnione w CZ' },
+  { item: 'Grossglockner (motocykl ×3)', amount: '~110 €', note: '3 × 36,50 €' },
+  { item: 'Rossfeld Panoramastraße (×4 pojazdy)', amount: '~36 €', note: '~9 € za pojazd' },
+  { category: '🎢 Atrakcje' },
+  { item: 'Kolejka SchafbergBahn (4 osoby, góra-dół)', amount: '~226 €', note: '~56,50 €/os.' },
+  { item: 'Zapora Vajont (wstęp)', amount: 'gratis', note: 'dostęp wolny' },
+  { item: 'Tre Cime di Lavaredo (dojazd/parking)', amount: '~30 €', note: 'opłata za drogę dojazdową' },
+  { category: '🏨 Noclegi (do uzupełnienia)' },
+  { item: 'Noc 1 — Wels', amount: '??? €', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 2 — Zell am See', amount: '??? €', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 3, 4, 5 — Cortina d\'Ampezzo (3 noce)', amount: '??? €', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 6 — Krieglach', amount: '??? €', note: 'do rezerwacji', dummy: true },
+  { category: '🍕 Wyżywienie (szacunek)' },
+  { item: '7 dni × 4 osoby × ~40 €/dzień', amount: '~1 120 €', note: 'restauracje + przekąski' },
+];
+
+const budgetEl = document.getElementById('budgetTable');
+let totalMin = 0;
+let html = `<table class="budget-table">
+  <thead><tr><th>Pozycja</th><th class="amount">Koszt</th><th>Uwagi</th></tr></thead><tbody>`;
+
+budgetData.forEach(row => {
+  if (row.category) {
+    html += `<tr class="category-header"><td colspan="3">${row.category}</td></tr>`;
+  } else {
+    const amtClass = row.dummy ? 'amount dummy' : 'amount';
+    html += `<tr><td>${row.item}</td><td class="${amtClass}">${row.amount}</td><td class="note">${row.note}</td></tr>`;
+    const num = parseFloat((row.amount || '').replace(/[^0-9.]/g, ''));
+    if (!isNaN(num) && !row.dummy) totalMin += num;
+  }
+});
+
+html += `<tr class="total"><td>Łącznie (bez noclegów)</td><td class="amount">~${Math.round(totalMin)} €</td><td class="note">noclegi do uzupełnienia</td></tr>`;
+html += `</tbody></table>`;
+budgetEl.innerHTML = html;
+</script>
+
+</body>
+</html>
