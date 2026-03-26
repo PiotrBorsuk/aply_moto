@@ -31,6 +31,78 @@ body {
   font-weight: 400;
 }
 
+/* ─── NAV ─── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+}
+
+.nav-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-brand em { font-style: italic; color: var(--mountain); }
+
+.nav-links {
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-links a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-links a:hover {
+  background: rgba(0,0,0,0.05);
+  color: var(--text);
+}
+
+.nav-links a.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .nav-brand { font-size: 0.88rem; }
+  .nav-links a { padding: 0.35rem 0.6rem; font-size: 0.72rem; }
+  .site-nav { padding: 0 1rem; }
+}
+
+/* ─── HERO ─── */
 .hero {
   position: relative;
   min-height: 40vh;
@@ -102,6 +174,7 @@ body {
   margin: 0 auto;
 }
 
+/* ─── STATS BAR ─── */
 .stats-bar {
   display: flex;
   justify-content: center;
@@ -128,6 +201,7 @@ body {
   font-weight: 500;
 }
 
+/* ─── MAP ─── */
 .map-section { padding: 3rem 2rem; }
 
 .section-title {
@@ -176,9 +250,9 @@ body {
 }
 
 .legend-item:hover { opacity: 0.7; }
-
 .legend-dot { width: 12px; height: 4px; border-radius: 2px; }
 
+/* ─── STAGES ─── */
 .stages {
   max-width: 900px;
   margin: 0 auto;
@@ -215,14 +289,7 @@ body {
   flex-shrink: 0;
 }
 
-.stage-header {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
-}
-
+.stage-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 .stage-name { font-family: 'DM Serif Display', serif; font-size: 1.35rem; }
 .stage-distance { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
 .stage-route { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; margin-bottom: 0.6rem; }
@@ -237,6 +304,7 @@ body {
   font-weight: 500;
 }
 
+/* ─── STAGE IMAGES ─── */
 .stage-images {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -255,11 +323,7 @@ body {
   position: relative;
 }
 
-.stage-images a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-
+.stage-images a:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 .stage-images img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .stage-images .img-caption {
@@ -272,6 +336,7 @@ body {
   font-weight: 500;
 }
 
+/* ─── ACCOMMODATION ─── */
 .accommodation-box {
   margin-top: 1.2rem;
   border: 1.5px dashed var(--border);
@@ -282,7 +347,6 @@ body {
 }
 
 .accommodation-box:hover { border-color: #ccc; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-
 .accommodation-box-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
 .accommodation-box-header .accom-icon { font-size: 1.1rem; }
 
@@ -293,12 +357,7 @@ body {
   color: var(--text);
 }
 
-.accommodation-box .accom-status {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.5;
-}
+.accommodation-box .accom-status { font-size: 0.82rem; color: var(--text-secondary); font-weight: 300; line-height: 1.5; }
 
 .accommodation-box .accom-status a {
   color: var(--accent);
@@ -346,6 +405,7 @@ body {
   margin-left: 0.5rem;
 }
 
+/* ─── INFO SECTION ─── */
 .info-section {
   max-width: 900px;
   margin: 0 auto;
@@ -382,33 +442,6 @@ body {
   .info-card--wide { grid-column: span 1; }
 }
 
-footer {
-  text-align: center;
-  padding: 3rem 2rem;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border);
-}
-
-footer .cta-text {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 640px) {
-  .hero { min-height: 30vh; }
-  .stats-bar { gap: 1.5rem; }
-  .stage-card { grid-template-columns: 48px 1fr; gap: 1rem; }
-  .stage-number { width: 44px; height: 44px; font-size: 1.5rem; }
-  #map { height: 380px; }
-  .stage-images { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-}
-
-.leaflet-popup-content-wrapper { border-radius: 8px !important; font-family: 'Source Sans 3', sans-serif !important; }
-.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; }
-
 /* ─── BUDGET TABLE ─── */
 .budget-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-top: 1.5rem; }
 
@@ -439,7 +472,7 @@ footer .cta-text {
 
 .budget-table .dummy { color: var(--text-secondary); font-style: italic; }
 
-/* ─── COST SPLIT CARDS ─── */
+/* ─── COST SPLIT ─── */
 .split-section {
   max-width: 900px;
   margin: 0 auto;
@@ -508,12 +541,6 @@ footer .cta-text {
   white-space: nowrap;
 }
 
-.split-line.dummy .split-line-amount {
-  color: var(--text-secondary);
-  font-style: italic;
-  font-weight: 300;
-}
-
 .split-category {
   font-size: 0.78rem;
   font-weight: 600;
@@ -549,9 +576,36 @@ footer .cta-text {
   text-align: right;
   margin-top: 0.2rem;
 }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .hero { min-height: 30vh; }
+  .stats-bar { gap: 1.5rem; }
+  .stage-card { grid-template-columns: 48px 1fr; gap: 1rem; }
+  .stage-number { width: 44px; height: 44px; font-size: 1.5rem; }
+  #map { height: 380px; }
+  .stage-images { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+
+.leaflet-popup-content-wrapper { border-radius: 8px !important; font-family: 'Source Sans 3', sans-serif !important; }
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; }
 </style>
 </head>
 <body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Alpy na <em>dwóch kołach</em></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#map-section">Trasa</a></li>
+      <li><a href="#stages-section">Etapy</a></li>
+      <li><a href="#info-section">Praktyczne</a></li>
+      <li><a href="#budget">Budżet</a></li>
+      <li><a href="#split">Podział</a></li>
+    </ul>
+  </div>
+</nav>
 
 <section class="hero">
   <div class="hero-mountains">
@@ -574,20 +628,20 @@ footer .cta-text {
   <div class="stat"><div class="stat-value">8</div><div class="stat-label">Noclegów</div></div>
 </div>
 
-<section class="map-section">
+<section class="map-section" id="map-section">
   <h2 class="section-title">Trasa</h2>
   <p class="section-subtitle">Kliknij w etap, aby zobaczyć szczegóły. Kliknij w trasę na mapie, aby podświetlić etap.</p>
   <div id="map"></div>
   <div class="map-legend" id="mapLegend"></div>
 </section>
 
-<section class="stages">
+<section class="stages" id="stages-section">
   <h2 class="section-title">Etapy</h2>
   <p class="section-subtitle">Szczegółowy plan każdego dnia podróży</p>
   <div id="stageCards"></div>
 </section>
 
-<section class="info-section">
+<section class="info-section" id="info-section">
   <h2 class="section-title">Informacje praktyczne</h2>
   <div class="info-grid">
     <div class="info-card">
@@ -647,11 +701,11 @@ footer .cta-text {
 
 <section class="info-section" id="budget">
   <h2 class="section-title">Szacunkowy budżet</h2>
-  <p class="section-subtitle">Koszty wspólne (3 motocykle + 1 samochód, 6 osób). Kurs: 1 € ≈ 4,30 zł. Brakujące noclegi zostaną uzupełnione.</p>
+  <p class="section-subtitle">Koszty wspólne (3 motocykle + 1 samochód, 6 osób). Kurs: 1 € ≈ 4,30 zł.</p>
   <div id="budgetTable"></div>
 </section>
 
-<section class="split-section">
+<section class="split-section" id="split">
   <h2 class="section-title">Podział kosztów</h2>
   <p class="section-subtitle">Rozliczenie na podgrupy (po 2 osoby). Noclegi wspólne i wyżywienie dzielone ÷3.</p>
   <div class="split-grid">
@@ -693,16 +747,12 @@ footer .cta-text {
         <span class="split-line-amount">206 zł</span>
       </div>
       <div class="split-line">
-        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
-        <span class="split-line-amount">2 774 zł</span>
+        <span class="split-line-label">Noc 1–7 wspólne (÷3)</span>
+        <span class="split-line-amount">3 449 zł</span>
       </div>
-      <div class="split-line dummy">
-        <span class="split-line-label">Noc 6, 7 (÷3)</span>
-        <span class="split-line-amount">??? zł</span>
-      </div>
-      <div class="split-line dummy">
+      <div class="split-line">
         <span class="split-line-label">Noc 8 — Oleszna (÷2)</span>
-        <span class="split-line-amount">??? zł</span>
+        <span class="split-line-amount">206 zł</span>
       </div>
 
       <div class="split-category">🍕 Wyżywienie (÷3)</div>
@@ -712,10 +762,10 @@ footer .cta-text {
       </div>
 
       <div class="split-total">
-        <span class="split-total-label">Razem (znane)</span>
-        <span class="split-total-amount">~7 020 zł</span>
+        <span class="split-total-label">Razem</span>
+        <span class="split-total-amount">~7 901 zł</span>
       </div>
-      <div class="split-note">+ noc 6, 7, 8 do uzupełnienia</div>
+      <div class="split-note">~3 951 zł / os.</div>
     </div>
 
     <!-- RAFAŁ -->
@@ -763,16 +813,12 @@ footer .cta-text {
         <span class="split-line-amount">206 zł</span>
       </div>
       <div class="split-line">
-        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
-        <span class="split-line-amount">2 774 zł</span>
+        <span class="split-line-label">Noc 1–7 wspólne (÷3)</span>
+        <span class="split-line-amount">3 449 zł</span>
       </div>
-      <div class="split-line dummy">
-        <span class="split-line-label">Noc 6, 7 (÷3)</span>
-        <span class="split-line-amount">??? zł</span>
-      </div>
-      <div class="split-line dummy">
+      <div class="split-line">
         <span class="split-line-label">Noc 8 — Oleszna (÷2)</span>
-        <span class="split-line-amount">??? zł</span>
+        <span class="split-line-amount">206 zł</span>
       </div>
 
       <div class="split-category">🍕 Wyżywienie (÷3)</div>
@@ -782,10 +828,10 @@ footer .cta-text {
       </div>
 
       <div class="split-total">
-        <span class="split-total-label">Razem (znane)</span>
-        <span class="split-total-amount">~8 358 zł</span>
+        <span class="split-total-label">Razem</span>
+        <span class="split-total-amount">~9 239 zł</span>
       </div>
-      <div class="split-note">+ noc 6, 7, 8 do uzupełnienia</div>
+      <div class="split-note">~4 620 zł / os.</div>
     </div>
 
     <!-- PIOTR -->
@@ -821,12 +867,8 @@ footer .cta-text {
 
       <div class="split-category">🏨 Noclegi</div>
       <div class="split-line">
-        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
-        <span class="split-line-amount">2 774 zł</span>
-      </div>
-      <div class="split-line dummy">
-        <span class="split-line-label">Noc 6, 7 (÷3)</span>
-        <span class="split-line-amount">??? zł</span>
+        <span class="split-line-label">Noc 1–7 wspólne (÷3)</span>
+        <span class="split-line-amount">3 449 zł</span>
       </div>
 
       <div class="split-category">🍕 Wyżywienie (÷3)</div>
@@ -836,10 +878,10 @@ footer .cta-text {
       </div>
 
       <div class="split-total">
-        <span class="split-total-label">Razem (znane)</span>
-        <span class="split-total-amount">~7 128 zł</span>
+        <span class="split-total-label">Razem</span>
+        <span class="split-total-amount">~7 803 zł</span>
       </div>
-      <div class="split-note">+ noc 6, 7 do uzupełnienia</div>
+      <div class="split-note">~3 902 zł / os.</div>
     </div>
 
   </div>
@@ -859,10 +901,9 @@ const stages = [
     overnight: 'Oleszna',
     accommodation: {
       name: 'Pensjonat Pod Lipami',
-      url: 'https://www.airbnb.pl/rooms/1460602905140035792?unique_share_id=bf41dfb3-ce96-45ef-a787-0dbf7c1b3dc3&viralityEntryPoint=1&s=76&source_impression_id=p3_1774452689_P3FB04QB__zd57p4&guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4',
+      url: 'https://www.airbnb.pl/rooms/1460602905140035792?unique_share_id=bf41dfb3-ce96-45ef-a787-0dbf7c1b3dc3&viralityEntryPoint=1&s=76&source_impression_id=p3_1774452689_P3FB04QB__zd57p4&guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13',
       note: '2 pokoje, parking na motocykle',
       price: '~411 zł (4 osoby, 1 noc)',
-      placeholder: 'Nocleg do ustalenia'
     },
     images: []
   },
@@ -877,10 +918,9 @@ const stages = [
     overnight: 'Wels',
     accommodation: {
       name: 'apartament w: Powiat Linz-Land, Austria',
-      url: 'https://www.airbnb.pl/rooms/1460602905140035792?unique_share_id=bf41dfb3-ce96-45ef-a787-0dbf7c1b3dc3&viralityEntryPoint=1&s=76&source_impression_id=p3_1774452689_P3FB04QB__zd57p4&guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4',
+      url: 'https://www.airbnb.pl/rooms/1460602905140035792?guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13',
       note: '2 sypialnie, 4 łóżka, 1 łazienka',
       price: '~1 400 zł (6 osób, 1 noc)',
-      placeholder: 'Nocleg do ustalenia'
     },
     images: []
   },
@@ -891,14 +931,13 @@ const stages = [
     distance: '260 km',
     type: 'scenic',
     tags: ['Schafberg','kolejka Himmelspforte','Rossfeld','Salzkammergut'],
-    desc: 'Rano wizyta w St. Wolfgang im Salzkammergut i wjazd kolejką na Himmelspforte Schafberg — punkt widokowy na 1783 m z panoramą alpejskich jezior. Po południu przejazd legendarną Rossfeld Panoramastraße (najwyżej położona droga Niemiec, 1600 m n.p.m.) z widokami na masyw Watzmann. Zakończenie dnia w Zell am See. Nocleg jest dosyć drogi, ale zależy nam na bazie wypadowej do Grossglockner, Zell am See jest bardzo blisko - pomoże uniknąć dużego ruchu podczas wjeżdżania.',
+    desc: 'Rano wizyta w St. Wolfgang im Salzkammergut i wjazd kolejką na Himmelspforte Schafberg — punkt widokowy na 1783 m z panoramą alpejskich jezior. Po południu przejazd legendarną Rossfeld Panoramastraße (najwyżej położona droga Niemiec, 1600 m n.p.m.) z widokami na masyw Watzmann. Zakończenie dnia w Zell am See.',
     overnight: 'Zell am See',
     accommodation: {
       name: 'apartament w: Kaprun, Austria',
-      url: 'https://www.airbnb.pl/rooms/1102002420733943300?unique_share_id=f30ad68a-9fe5-45fc-a516-f5fc14237777&viralityEntryPoint=1&s=76&source_impression_id=p3_1774453567_P3400GRS78k21PjU&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4&check_in=2026-06-14&guests=6&adults=6&check_out=2026-06-15',
+      url: 'https://www.airbnb.pl/rooms/1102002420733943300?check_in=2026-06-14&guests=6&adults=6&check_out=2026-06-15',
       note: 'cały obiekt',
       price: '~2 352 zł (6 osób, 1 noc)',
-      placeholder: 'Nocleg do ustalenia'
     },
     images: [
       { url: 'https://coeser.de/blog/wp-content/uploads/2016/09/schafberg_aufmacher-978x550.jpg', caption: 'Schafberg — kolejka' },
@@ -917,14 +956,13 @@ const stages = [
     overnight: 'Cortina d\'Ampezzo',
     accommodation: {
       name: 'apartament w: Pieve di Cadore, Włochy',
-      url: 'https://www.airbnb.pl/rooms/1626781138466715747?unique_share_id=527808e1-78bd-41bd-8fb9-3ddc00522f4d&viralityEntryPoint=1&s=76&source_impression_id=p3_1774523603_P3Ont0x95mQkS6TO&check_in=2026-06-15&guests=6&adults=6&check_out=2026-06-18&_set_bev_on_new_domain=1758214749_EAY2VjM2IxNjI3Ym&set_everest_cookie_on_new_domain=1774523603.EAYWQzMDFiMjY5ZWNmMD.xb_PQ8UUr2xSOVtdvilIPJfU7gGmeeDe5BBmKTP4YKE',
+      url: 'https://www.airbnb.pl/rooms/1626781138466715747?check_in=2026-06-15&guests=6&adults=6&check_out=2026-06-18',
       note: 'cały obiekt',
       price: '~4 571 zł (6 osób, 3 noce)',
-      placeholder: 'Nocleg do ustalenia'
     },
     images: [
-        { url: 'https://www.salzburg.info/deskline/infrastruktur/objekte/Gro%C3%9Fglockner%20Hochalpenstra%C3%9Fe_9427/1265741/image-thumb__1265741__slider-main/grossglockner-hochalpenstrasse-fuscher-lacke_38596144@2x.9e7fd308.webp', caption: 'Grossglockner Hochalpenstraße' },
-        { url: 'https://images1.peakbook.org/images/576/olepetter_18_samme.jpg?p=xtralarge', caption: 'Edelweißspitze' }
+      { url: 'https://www.salzburg.info/deskline/infrastruktur/objekte/Gro%C3%9Fglockner%20Hochalpenstra%C3%9Fe_9427/1265741/image-thumb__1265741__slider-main/grossglockner-hochalpenstrasse-fuscher-lacke_38596144@2x.9e7fd308.webp', caption: 'Grossglockner Hochalpenstraße' },
+      { url: 'https://images1.peakbook.org/images/576/olepetter_18_samme.jpg?p=xtralarge', caption: 'Edelweißspitze' }
     ],
   },
   {
@@ -934,13 +972,13 @@ const stages = [
     distance: '201 km',
     type: 'highlight',
     tags: ['trekking','Tre Cime','Vajont','Lago del Mis'],
-    desc: 'W tym miejscu zostajemy na dłużej. Plany na te dni mogą się zmienić, ale główne założenie - trekkingi po górach + krótkie przejazdy moto. Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Sama zapora stoi do dziś nienaruszona — poruszające świadectwo tragedii. Powrót widokowymi trasami wzdłuż pięknego Lago del Mis.',
+    desc: 'Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Powrót wzdłuż Lago del Mis.',
     overnight: 'Cortina d\'Ampezzo',
     accommodation: { note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo' },
     images: [
-        { url: 'https://www.guidedolomiti.com/wp-content/uploads/walk-around-the-tre-cime.webp', caption: 'Tre Cime di Lavaredo' },
-        { url: 'https://media.istockphoto.com/id/1206516634/pl/zdj%C4%99cie/widok-z-lotu-ptaka-na-zapor%C4%99-vajont-we-w%C5%82oszech.jpg?s=612x612&w=0&k=20&c=rJrJ_8o9jLq70-ZJId7zL74wzzhVufwJWs-LQKvuEGg=', caption: 'Zapora Vajont' },
-        { url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlYzSYfgQZuTa9lOw0YM6D1GWbTrc2iiqp97M71cSzGgpv_8Ptdmxs8z6e_QXT-77dtjho_pzO0NBGlbCm0K73qNPJVunjDDWf5P206si_ur3dhVE84E8k8DysAstmKrRqPlMuDQ4iw1-q/s1600/DSC_0334.jpeg', caption: 'Lago del Mis' }
+      { url: 'https://www.guidedolomiti.com/wp-content/uploads/walk-around-the-tre-cime.webp', caption: 'Tre Cime di Lavaredo' },
+      { url: 'https://media.istockphoto.com/id/1206516634/pl/zdj%C4%99cie/widok-z-lotu-ptaka-na-zapor%C4%99-vajont-we-w%C5%82oszech.jpg?s=612x612&w=0&k=20&c=rJrJ_8o9jLq70-ZJId7zL74wzzhVufwJWs-LQKvuEGg=', caption: 'Zapora Vajont' },
+      { url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlYzSYfgQZuTa9lOw0YM6D1GWbTrc2iiqp97M71cSzGgpv_8Ptdmxs8z6e_QXT-77dtjho_pzO0NBGlbCm0K73qNPJVunjDDWf5P206si_ur3dhVE84E8k8DysAstmKrRqPlMuDQ4iw1-q/s1600/DSC_0334.jpeg', caption: 'Lago del Mis' }
     ]
   },
   {
@@ -950,12 +988,12 @@ const stages = [
     distance: '132 km',
     type: 'scenic',
     tags: ['Piz Boè','Torri del Sella','Lago di Fedaia','przełęcze'],
-    desc: 'Krótka, ale niezwykle widokowa pętla wokół masywu Sella. Przejazd przez przełęcze z widokami na Piz Boè (3152 m) i dramatyczne Torri del Sella. Postój nad Lago di Fedaia — jeziorem u stóp lodowca Marmolady, najwyższego szczytu Dolomitów. Czysta motocyklowa przyjemność — serpentyny, widoki i włoska kawa na każdym przystanku. Dzień również można połączyć z lekkim trekkingiem.',
+    desc: 'Krótka, ale niezwykle widokowa pętla wokół masywu Sella. Przejazd przez przełęcze z widokami na Piz Boè (3152 m) i dramatyczne Torri del Sella. Postój nad Lago di Fedaia — jeziorem u stóp lodowca Marmolady, najwyższego szczytu Dolomitów.',
     overnight: 'Cortina d\'Ampezzo',
     accommodation: { note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo' },
     images: [
-        { url: 'https://www.val-gardena.com/fileadmin/_processed_/9/f/csm_2023-shu-sellajoch-pass-strasse_8419dbd79d.jpg', caption: 'Sella Pass'},
-        { url: 'https://www.montagnaestate.it/wp-content/uploads/Lago-Fedaia-visto-dal-Viel-dal-Pan.jpg', caption: 'Lago di Fedaia'},
+      { url: 'https://www.val-gardena.com/fileadmin/_processed_/9/f/csm_2023-shu-sellajoch-pass-strasse_8419dbd79d.jpg', caption: 'Sella Pass'},
+      { url: 'https://www.montagnaestate.it/wp-content/uploads/Lago-Fedaia-visto-dal-Viel-dal-Pan.jpg', caption: 'Lago di Fedaia'},
     ]
   },
   {
@@ -965,9 +1003,14 @@ const stages = [
     distance: '~150 km',
     type: 'scenic',
     tags: ['Plöckenpass','Villach','trekking', 'wodospady'],
-    desc: 'Pożegnanie z Dolomitami. Z Cortiny d\'Ampezzo jedziemy w stronę Austrii przez wspaniałą przełęcz Plöckenpass, leżącą na granicy włosko-austriackiej. Po dojechaniu do Villach zostawiamy motocykle i robimy relaksujący trekking po lokalnym wąwozie z wodospadami (np. Tscheppaschlucht lub pobliskim) — świetny odpoczynek po kilku intensywnych dniach w siodle.',
+    desc: 'Pożegnanie z Dolomitami. Z Cortiny d\'Ampezzo jedziemy w stronę Austrii przez wspaniałą przełęcz Plöckenpass. Po dojechaniu do Villach relaksujący trekking po wąwozie z wodospadami.',
     overnight: 'Villach',
-    accommodation: { placeholder: 'Nocleg do rezerwacji — Villach' },
+    accommodation: {
+      name: 'apartament w: Klagenfurt am Wörthersee, Austria',
+      url: 'https://www.airbnb.pl/rooms/1165332673768944561?adults=6&check_in=2026-06-18&check_out=2026-06-19',
+      note: 'cały obiekt',
+      price: '~783 zł (6 osób, 1 noc)',
+    },
     images: [
       { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0n_4qi4cp2P9y6KvgnumimtAXDMd922MiHw&s', caption: 'Plockenpass'},
       { url: 'https://img.oastatic.com/img2/72622455/max/variant.webp', caption: 'Wodospady Tscheppaschlucht'},
@@ -980,9 +1023,14 @@ const stages = [
     distance: '~310 km',
     type: 'transfer',
     tags: ['Red Bull Ring','Styria','Krems', 'Wachau'],
-    desc: 'Północny tranzyt przez serce Austrii. Wyjeżdżając z Villach, kierujemy się w stronę wspaniałego toru Red Bull Ring (Spielberg) – obowiązkowy przystanek i punkt zdjęciowy dla fanów motorsportu. Następnie lecimy do malowniczego Krems an der Donau, położonego w winiarskim regionie Wachau nad samym Dunajem.',
+    desc: 'Północny tranzyt przez serce Austrii. Przystanek na torze Red Bull Ring (Spielberg), a następnie przejazd do Krems an der Donau w regionie Wachau.',
     overnight: 'Krems an der Donau',
-    accommodation: { placeholder: 'Nocleg do rezerwacji — Krems an der Donau' },
+    accommodation: {
+      name: 'apartament w: Rossatz-Arnsdorf, Austria',
+      url: 'https://www.airbnb.pl/rooms/1181077338456802234?adults=6&check_in=2026-06-19&check_out=2026-06-20',
+      note: 'cały obiekt',
+      price: '~1 240 zł (6 osób, 1 noc)',
+    },
     images: [
       { url: 'https://www.redbullring.com/en/wp-content/uploads/sites/1/fly-images/40218/SPG2022_0109_RBRing_Gelaende_Uebersichtsplan_Luftbild_GESAMT_221201_300dpi-2880x9999.jpg', caption: 'Tor Red Bull Ring'},
     ]
@@ -994,8 +1042,14 @@ const stages = [
     distance: '~330 km',
     type: 'transfer',
     tags: ['powrót', 'Czechy', 'koniec'],
-    desc: 'Ostatni etap naszej alpejskiej przygody. Wyruszamy znad Dunaju, przecinamy czeskie drogi kierując się prosto na Dolny Śląsk. Wracamy do bazy w Olesznej, gdzie czeka nas rozpakowanie motocykli. Ostatni nocleg, żeby rano wyruszyć do domu z motocyklami na przyczepce.',
-    accommodation: null,
+    desc: 'Ostatni etap naszej alpejskiej przygody. Wyruszamy znad Dunaju, przecinamy czeskie drogi kierując się prosto na Dolny Śląsk. Wracamy do bazy w Olesznej.',
+    overnight: 'Oleszna',
+    accommodation: {
+      name: 'chatka w: Tąpadła, Polska',
+      url: 'https://www.airbnb.pl/rooms/1460602905140035792?adults=4&check_in=2026-06-20&check_out=2026-06-21',
+      note: 'cały obiekt',
+      price: '~411 zł (4 osoby, 1 noc)',
+    },
     images: []
   }
 ];
@@ -1010,13 +1064,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const polylines = [];
 const allBounds = L.latLngBounds();
-
 const gpxFiles = [null,'Austria 1.gpx','Austria 2.gpx','Austria 3.gpx','Austria 4.gpx','Austria 5.gpx','Austria 6.gpx','Austria 7.gpx','Austria 8.gpx'];
 
 async function loadAllGPX() {
   for (let i = 0; i < gpxFiles.length; i++) {
-    if (!gpxFiles[i]) continue;
-    if (!stages[i]) break;
+    if (!gpxFiles[i] || !stages[i]) continue;
     try {
       const response = await fetch(gpxFiles[i]);
       const gpxText = await response.text();
@@ -1031,15 +1083,15 @@ async function loadAllGPX() {
       const pl = L.polyline(latlngs, { color: stageColors[i], weight: 3.5, opacity: 0.85, lineJoin: 'round', dashArray: stages[i].num === 0 ? '8 6' : null }).addTo(map);
       pl.on('click', () => highlightStage(i));
       polylines.push(pl);
-      const label = stages[i].num === 0 ? '0' : stages[i].num;
-      const startIcon = L.divIcon({ className: '', html: `<div style="width:22px;height:22px;border-radius:50%;background:${stageColors[i]};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:sans-serif">${label}</div>`, iconSize: [22, 22], iconAnchor: [11, 11] });
-      L.marker(latlngs[0], { icon: startIcon }).addTo(map).bindPopup(`<b>Etap ${label}: ${stages[i].name}</b><br>${stages[i].route}<br><span style="color:#888">${stages[i].distance || ''}</span>`);
-    } catch (error) { console.error(`Nie udało się załadować pliku: ${gpxFiles[i]}`, error); }
+      const label = stages[i].num;
+      L.marker(latlngs[0], { icon: L.divIcon({ className: '', html: `<div style="width:22px;height:22px;border-radius:50%;background:${stageColors[i]};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:sans-serif">${label}</div>`, iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(map).bindPopup(`<b>Etap ${label}: ${stages[i].name}</b><br>${stages[i].route}<br><span style="color:#888">${stages[i].distance || ''}</span>`);
+    } catch (error) { console.error(`GPX error: ${gpxFiles[i]}`, error); }
   }
   if (allBounds.isValid()) map.fitBounds(allBounds.pad(0.05));
 }
 loadAllGPX();
 
+// Legend
 const legendEl = document.getElementById('mapLegend');
 stages.forEach((s, i) => {
   const item = document.createElement('div');
@@ -1049,6 +1101,7 @@ stages.forEach((s, i) => {
   legendEl.appendChild(item);
 });
 
+// Stage cards
 const cardsEl = document.getElementById('stageCards');
 stages.forEach((s, i) => {
   const card = document.createElement('div');
@@ -1062,13 +1115,14 @@ stages.forEach((s, i) => {
   if (s.accommodation) {
     const a = s.accommodation;
     const isBooked = a.status === 'booked';
-    accomHtml = `<div class="accommodation-box${isBooked ? ' booked' : ''}"><div class="accommodation-box-header"><span class="accom-icon">${isBooked ? '✅' : '🏨'}</span><h4>Nocleg — ${s.overnight || 'do ustalenia'}${isBooked ? `<span class="accom-badge">Zarezerwowane</span>` : ''}</h4></div><div class="accom-status">${isBooked && a.name ? `<strong>${a.name}</strong><br>` : ''}${a.note ? `${a.note}<br>` : ''}${a.price ? `Cena: ${a.price}<br>` : ''}${a.url ? `<a href="${a.url}" target="_blank" rel="noopener" class="accom-link-placeholder">🔗 Zobacz rezerwację</a>` : ''}${!isBooked && a.placeholder ? `<span style="opacity:0.7;font-style:italic">${a.placeholder}</span>` : ''}${!isBooked && !a.placeholder && !a.note ? `<span style="opacity:0.7;font-style:italic">Do uzupełnienia</span>` : ''}</div></div>`;
+    accomHtml = `<div class="accommodation-box${isBooked ? ' booked' : ''}"><div class="accommodation-box-header"><span class="accom-icon">${isBooked ? '✅' : '🏨'}</span><h4>Nocleg — ${s.overnight || 'do ustalenia'}${isBooked ? `<span class="accom-badge">Zarezerwowane</span>` : ''}</h4></div><div class="accom-status">${a.name ? `<strong>${a.name}</strong><br>` : ''}${a.note ? `${a.note}<br>` : ''}${a.price ? `Cena: ${a.price}<br>` : ''}${a.url ? `<a href="${a.url}" target="_blank" rel="noopener" class="accom-link-placeholder">🔗 Zobacz rezerwację</a>` : ''}</div></div>`;
   }
   card.innerHTML = `<div class="stage-number" style="background:${stageColors[i]}">${s.num}</div><div><div class="stage-header"><span class="stage-name">${s.name}</span><span class="stage-distance">${s.distance ? '~'+s.distance : ''}</span></div><div class="stage-route">${s.route}</div><p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.6rem;font-weight:300">${s.desc}</p><div class="stage-tags">${(s.tags||[]).map(t => `<span class="tag">${t}</span>`).join('')}${s.overnight ? `<span class="tag" style="background:var(--accent-light);border-color:var(--accent-light);color:var(--accent)">🏨 ${s.overnight}</span>` : ''}</div>${imagesHtml}${accomHtml}</div>`;
   card.addEventListener('click', (e) => { if (e.target.closest('.stage-images') || e.target.closest('.accommodation-box')) return; highlightStage(i); });
   cardsEl.appendChild(card);
 });
 
+// Highlight
 let activeStage = -1;
 function highlightStage(idx) {
   polylines.forEach(pl => pl.setStyle({ weight: 3.5, opacity: 0.85 }));
@@ -1082,6 +1136,7 @@ function highlightStage(idx) {
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+// Budget table
 const budgetData = [
   { category: '⛽ Paliwo (szacunek na ~2 400 km)' },
   { item: 'KTM 390 Adventure (~3,7 L/100km)', amount: '~555 zł', note: '~89L × ~6,25 zł/L' },
@@ -1101,9 +1156,9 @@ const budgetData = [
   { item: 'Noc 1 — Wels (pow. Linz-Land)', amount: '~1 400 zł', note: 'Airbnb, 6 osób, 1 noc' },
   { item: 'Noc 2 — Zell am See (Kaprun)', amount: '~2 352 zł', note: 'Airbnb, 6 osób, 1 noc' },
   { item: 'Noc 3, 4, 5 — Cortina (Pieve di Cadore)', amount: '~4 571 zł', note: 'Airbnb, 6 osób, 3 noce' },
-  { item: 'Noc 6 — Villach', amount: '??? zł', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 7 — Krems an der Donau', amount: '??? zł', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 8 — Oleszna', amount: '??? zł', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 6 — Villach (Klagenfurt)', amount: '~783 zł', note: 'Airbnb, 6 osób, 1 noc' },
+  { item: 'Noc 7 — Krems (Rossatz-Arnsdorf)', amount: '~1 240 zł', note: 'Airbnb, 6 osób, 1 noc' },
+  { item: 'Noc 8 — Oleszna (Tąpadła)', amount: '~411 zł', note: 'Airbnb, 4 osoby, 1 noc' },
   { category: '🍕 Wyżywienie (szacunek)' },
   { item: '8 dni × 6 osób × ~170 zł/dzień', amount: '~8 160 zł', note: 'restauracje + przekąski' },
 ];
@@ -1120,10 +1175,27 @@ budgetData.forEach(row => {
     if (!isNaN(num) && !row.dummy) totalMin += num;
   }
 });
-html += `<tr class="total"><td>Łącznie (z zarezerwowanymi noclegami)</td><td class="amount">~${Math.round(totalMin).toLocaleString('pl-PL')} zł</td><td class="note">3 noclegi jeszcze do uzupełnienia</td></tr>`;
+html += `<tr class="total"><td>Łącznie</td><td class="amount">~${Math.round(totalMin).toLocaleString('pl-PL')} zł</td><td class="note"></td></tr>`;
 html += `<tr><td colspan="3" style="padding-top:0.8rem;font-size:0.82rem;color:var(--text-secondary);font-weight:300;border:none">Na osobę (÷6): ~${Math.round(totalMin/6).toLocaleString('pl-PL')} zł · Kurs przeliczeniowy: 1 € ≈ 4,30 zł</td></tr>`;
 html += `</tbody></table>`;
 budgetEl.innerHTML = html;
+
+// ─── NAV SCROLL SPY ───
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+function updateNav() {
+  const scrollY = window.scrollY + 100;
+  let current = '';
+  sections.forEach(sec => {
+    if (sec.offsetTop <= scrollY) current = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
 </script>
 
 </body>
