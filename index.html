@@ -619,10 +619,9 @@ footer .cta-text {
     <div class="info-card">
       <h3>🛣️ Opłaty drogowe</h3>
       <ul>
-        <li>Austria — winiety autostradowe (10-dniowa)</li>
-        <li>Grossglockner Hochalpenstraße — opłata ok. €28 (moto)</li>
-        <li>Czechy — e-vinieta</li>
-        <li>Włochy — opłaty odcinkowo na autostradach</li>
+        <li>Austria — winiety autostradowe - nie dotyczy nas, omijamy wszystkie płatne drogi</li>
+        <li>Grossglockner Hochalpenstraße — opłata ok. ~157 zł (moto)</li>
+        <li>Czechy — e-vinieta (samochód)</li>
       </ul>
     </div>
     <div class="info-card">
@@ -644,7 +643,7 @@ footer .cta-text {
 
 <section class="info-section" id="budget">
   <h2 class="section-title">Szacunkowy budżet</h2>
-  <p class="section-subtitle">Koszt na osobę (3 motocykle + 1 samochód). Noclegi zostaną zaktualizowane po rezerwacji.</p>
+  <p class="section-subtitle">Koszty wspólne (3 motocykle + 1 samochód, 6 osób). Kurs: 1 € ≈ 4,30 zł. Brakujące noclegi zostaną uzupełnione.</p>
   <div id="budgetTable"></div>
 </section>
 
@@ -667,11 +666,10 @@ const stages = [
     desc: 'Ekipa samochodem przywozi dwa motocykle do Olesznej. Rozładunek, przegląd sprzętu, sprawdzenie motocykli i ostatnie przygotowania przed alpejską przygodą. Wieczór na spokojne pakowanie.',
     overnight: 'Oleszna',
     accommodation: {
-      // status: 'booked', // uncomment when booked
       name: 'Pensjonat Pod Lipami',
       url: 'https://www.airbnb.pl/rooms/1460602905140035792?unique_share_id=bf41dfb3-ce96-45ef-a787-0dbf7c1b3dc3&viralityEntryPoint=1&s=76&source_impression_id=p3_1774452689_P3FB04QB__zd57p4&guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4',
       note: '2 pokoje, parking na motocykle',
-      price: '~411 PLN (4 osoby, 1 noc)',
+      price: '~411 zł (4 osoby, 1 noc)',
       placeholder: 'Nocleg do ustalenia'
     },
     images: []
@@ -686,12 +684,11 @@ const stages = [
     desc: 'Etap dojazdowy z Dolnego Śląska przez malownicze Czechy południowe. Trasa prowadzi przez Kotlinę Kłodzką, czeskie miasteczka i wzdłuż Wełtawy, z celem w austriackim Wels.',
     overnight: 'Wels',
     accommodation: {
-      // status: 'booked', // uncomment when booked
       name: 'apartament w: Powiat Linz-Land, Austria',
       url: 'https://www.airbnb.pl/rooms/1460602905140035792?unique_share_id=bf41dfb3-ce96-45ef-a787-0dbf7c1b3dc3&viralityEntryPoint=1&s=76&source_impression_id=p3_1774452689_P3FB04QB__zd57p4&guests=4&adults=4&check_in=2026-06-12&check_out=2026-06-13&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4',
       note: '2 sypialnie, 4 łóżka, 1 łazienka',
-      price: '1400 PLN (6 osób, 1 noc)',
-      placeholder: 'Nocleg do ustalenia'   
+      price: '~1 400 zł (6 osób, 1 noc)',
+      placeholder: 'Nocleg do ustalenia'
     },
     images: []
   },
@@ -705,12 +702,11 @@ const stages = [
     desc: 'Rano wizyta w St. Wolfgang im Salzkammergut i wjazd kolejką na Himmelspforte Schafberg — punkt widokowy na 1783 m z panoramą alpejskich jezior. Po południu przejazd legendarną Rossfeld Panoramastraße (najwyżej położona droga Niemiec, 1600 m n.p.m.) z widokami na masyw Watzmann. Zakończenie dnia w Zell am See. Nocleg jest dosyć drogi, ale zależy nam na bazie wypadowej do Grossglockner, Zell am See jest bardzo blisko - pomoże uniknąć dużego ruchu podczas wjeżdżania.',
     overnight: 'Zell am See',
     accommodation: {
-      // status: 'booked', // uncomment when booked
       name: 'apartament w: Kaprun, Austria',
       url: 'https://www.airbnb.pl/rooms/1102002420733943300?unique_share_id=f30ad68a-9fe5-45fc-a516-f5fc14237777&viralityEntryPoint=1&s=76&source_impression_id=p3_1774453567_P3400GRS78k21PjU&_set_bev_on_new_domain=1774452689_EAZTViMTE5YzVhMD&set_everest_cookie_on_new_domain=1774452689.EAYjBjMTY0ZWMxN2ZmMm.x-zrg_fwXk6xDqu9VPo7zPQTBXVDWDsAbEq8UALxRL4&check_in=2026-06-14&guests=6&adults=6&check_out=2026-06-15',
       note: 'cały obiekt',
-      price: '2352 PLN (6 osób, 1 noc)',
-      placeholder: 'Nocleg do ustalenia'   
+      price: '~2 352 zł (6 osób, 1 noc)',
+      placeholder: 'Nocleg do ustalenia'
     },
     images: [
       { url: 'https://coeser.de/blog/wp-content/uploads/2016/09/schafberg_aufmacher-978x550.jpg', caption: 'Schafberg — kolejka' },
@@ -728,9 +724,13 @@ const stages = [
     desc: 'Koronny etap wyjazdu! Przejazd legendarną Grossglockner Hochalpenstraße z postojami na Kaiser-Franz-Josefs-Höhe (widok na lodowiec Pasterze i najwyższy szczyt Austrii — 3798 m) oraz Edelweißspitze (2571 m — najwyższy punkt drogi). Mama dołącza na motocykl taty jako pasażer. Po Grossglocknerze powrót do Zell am See po samochód, a następnie przejazd do Cortina d\'Ampezzo na 3 kolejne noce.',
     overnight: 'Cortina d\'Ampezzo',
     accommodation: {
-      placeholder: 'Nocleg do rezerwacji — Cortina d\'Ampezzo (3 noce)'
+      name: 'apartament w: Pieve di Cadore, Włochy',
+      url: 'https://www.airbnb.pl/rooms/1626781138466715747?unique_share_id=527808e1-78bd-41bd-8fb9-3ddc00522f4d&viralityEntryPoint=1&s=76&source_impression_id=p3_1774523603_P3Ont0x95mQkS6TO&check_in=2026-06-15&guests=6&adults=6&check_out=2026-06-18&_set_bev_on_new_domain=1758214749_EAY2VjM2IxNjI3Ym&set_everest_cookie_on_new_domain=1774523603.EAYWQzMDFiMjY5ZWNmMD.xb_PQ8UUr2xSOVtdvilIPJfU7gGmeeDe5BBmKTP4YKE',
+      note: 'cały obiekt',
+      price: '~4 571 zł (6 osób, 3 noce)',
+      placeholder: 'Nocleg do ustalenia'
     },
-    images: [ 
+    images: [
         { url: 'https://www.salzburg.info/deskline/infrastruktur/objekte/Gro%C3%9Fglockner%20Hochalpenstra%C3%9Fe_9427/1265741/image-thumb__1265741__slider-main/grossglockner-hochalpenstrasse-fuscher-lacke_38596144@2x.9e7fd308.webp', caption: 'Grossglockner Hochalpenstraße' },
         { url: 'https://images1.peakbook.org/images/576/olepetter_18_samme.jpg?p=xtralarge', caption: 'Edelweißspitze' }
     ],
@@ -742,7 +742,7 @@ const stages = [
     distance: '201 km',
     type: 'highlight',
     tags: ['trekking','Tre Cime','Vajont','Lago del Mis'],
-    desc: 'Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Sama zapora stoi do dziś nienaruszona — poruszające świadectwo tragedii. Powrót widokowymi trasami wzdłuż pięknego Lago del Mis.',
+    desc: 'W tym miejscu zostajemy na dłużej. Plany na te dni mogą się zmienić, ale główne założenie - trekkingi po górach + krótkie przejazdy moto. Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Sama zapora stoi do dziś nienaruszona — poruszające świadectwo tragedii. Powrót widokowymi trasami wzdłuż pięknego Lago del Mis.',
     overnight: 'Cortina d\'Ampezzo',
     accommodation: {
       note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo'
@@ -782,7 +782,10 @@ const stages = [
     accommodation: {
       placeholder: 'Nocleg do rezerwacji — Villach'
     },
-    images: []
+    images: [
+      { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0n_4qi4cp2P9y6KvgnumimtAXDMd922MiHw&s', caption: 'Plockenpass'},
+      { url: 'https://img.oastatic.com/img2/72622455/max/variant.webp', caption: 'Wodospady Tscheppaschlucht'},
+    ]
   },
   {
     num: 7,
@@ -796,7 +799,9 @@ const stages = [
     accommodation: {
       placeholder: 'Nocleg do rezerwacji — Krems an der Donau'
     },
-    images: []
+    images: [
+      { url: 'https://www.redbullring.com/en/wp-content/uploads/sites/1/fly-images/40218/SPG2022_0109_RBRing_Gelaende_Uebersichtsplan_Luftbild_GESAMT_221201_300dpi-2880x9999.jpg', caption: 'Tor Red Bull Ring'},
+    ]
   },
   {
     num: 8,
@@ -805,7 +810,7 @@ const stages = [
     distance: '~330 km',
     type: 'transfer',
     tags: ['powrót', 'Czechy', 'koniec'],
-    desc: 'Ostatni etap naszej alpejskiej przygody. Wyruszamy znad Dunaju, przecinamy czeskie drogi kierując się prosto na Dolny Śląsk. Wracamy do bazy w Olesznej, gdzie czeka nas rozpakowanie motocykli, podsumowanie wyjazdu i oficjalne zakończenie!',
+    desc: 'Ostatni etap naszej alpejskiej przygody. Wyruszamy znad Dunaju, przecinamy czeskie drogi kierując się prosto na Dolny Śląsk. Wracamy do bazy w Olesznej, gdzie czeka nas rozpakowanie motocykli. Ostatni nocleg, żeby rano wyruszyć do domu z motocyklami na przyczepce.',
     accommodation: null,
     images: []
   }
@@ -823,11 +828,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const polylines = [];
 const allBounds = L.latLngBounds();
 
-// 1. Podaj listę ścieżek do Twoich plików GPX (muszą odpowiadać kolejnością etapom w tablicy `stages`)
-// Jeśli danego dnia nie ma pliku GPX, wpisz po prostu null.
 const gpxFiles = [
-  null,                   // Etap 0 (np. logistyka, brak GPX)
-  'Austria 1.gpx',  
+  null,
+  'Austria 1.gpx',
   'Austria 2.gpx',
   'Austria 3.gpx',
   'Austria 4.gpx',
@@ -839,55 +842,43 @@ const gpxFiles = [
 
 async function loadAllGPX() {
   for (let i = 0; i < gpxFiles.length; i++) {
-    // Jeśli nie ma pliku dla danego etapu, pomiń go
     if (!gpxFiles[i]) continue;
-    
-    // Jeśli etapów jest więcej niż zdefiniowano, przerywamy
-    if (!stages[i]) break; 
+    if (!stages[i]) break;
 
     try {
-      // 2. Pobieramy plik GPX
       const response = await fetch(gpxFiles[i]);
       const gpxText = await response.text();
-
-      // 3. Parsujemy format XML (GPX) do obiektu
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(gpxText, "text/xml");
 
-      // 4. Szukamy punktów trasy (szukamy tagów <trkpt> dla śladów oraz <rtept> dla tras)
       let points = xmlDoc.querySelectorAll("trkpt");
-      
-      // Jeśli plik nie zawiera śladu (<trkpt>), a jedynie zgrubne punkty trasy (<rtept>), użyj ich jako backupu
       if (points.length === 0) {
         points = xmlDoc.querySelectorAll("rtept");
-      }      const latlngs = Array.from(points).map(pt => [
+      }
+      const latlngs = Array.from(points).map(pt => [
         parseFloat(pt.getAttribute("lat")),
         parseFloat(pt.getAttribute("lon"))
       ]);
 
       if (latlngs.length === 0) continue;
 
-      // 5. Rozszerzamy granice mapy o punkty z tej trasy
       latlngs.forEach(ll => allBounds.extend(ll));
 
-      // 6. Rysujemy cień trasy
       L.polyline(latlngs, {
         color: '#000', weight: 5, opacity: 0.1
       }).addTo(map);
 
-      // 7. Rysujemy główną, kolorową trasę
       const pl = L.polyline(latlngs, {
         color: stageColors[i],
         weight: 3.5,
         opacity: 0.85,
         lineJoin: 'round',
-        dashArray: stages[i].num === 0 ? '8 6' : null // przerywana linia dla etapu 0
+        dashArray: stages[i].num === 0 ? '8 6' : null
       }).addTo(map);
 
       pl.on('click', () => highlightStage(i));
       polylines.push(pl);
 
-      // 8. Dodajemy Twój niestandardowy znacznik na starcie etapu
       const label = stages[i].num === 0 ? '0' : stages[i].num;
       const startIcon = L.divIcon({
         className: '',
@@ -905,13 +896,11 @@ async function loadAllGPX() {
     }
   }
 
-  // 9. Na koniec dopasowujemy mapę, by obejmowała wszystkie wczytane trasy
   if (allBounds.isValid()) {
     map.fitBounds(allBounds.pad(0.05));
   }
 }
 
-// Uruchamiamy funkcję
 loadAllGPX();
 
 // ─── LEGEND ───
@@ -931,7 +920,6 @@ stages.forEach((s, i) => {
   card.className = 'stage-card';
   card.id = `stage-${i}`;
 
-  // Build images HTML
   let imagesHtml = '';
   if (s.images && s.images.length > 0) {
     imagesHtml = `<div class="stage-images">${s.images.map(img =>
@@ -942,7 +930,6 @@ stages.forEach((s, i) => {
     ).join('')}</div>`;
   }
 
-  // Build accommodation embed HTML
   let accomHtml = '';
   if (s.accommodation) {
     const a = s.accommodation;
@@ -1013,30 +1000,31 @@ function highlightStage(idx) {
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ─── BUDGET TABLE ───
+// ─── BUDGET TABLE (PLN) ───
 const budgetData = [
-  { category: '⛽ Paliwo (szacunek na ~2400 km)' },
-  { item: 'KTM 390 Adventure (~3,7 L/100km)', amount: '~129 €', note: '~89L × 1,45 €/L' },
-  { item: 'KTM 890 Adventure (~4,5 L/100km)', amount: '~157 €', note: '~108L × 1,45 €/L' },
-  { item: 'Kawasaki Versys 1000 SE (~5,8 L/100km)', amount: '~202 €', note: '~139L × 1,45 €/L' },
-  { item: 'BMW X3 diesel (~7,5 L/100km)', amount: '~261 €', note: '~180L × 1,45 €/L' },
+  { category: '⛽ Paliwo (szacunek na ~2 400 km)' },
+  { item: 'KTM 390 Adventure (~3,7 L/100km)', amount: '~555 zł', note: '~89L × ~6,25 zł/L' },
+  { item: 'KTM 890 Adventure (~4,5 L/100km)', amount: '~675 zł', note: '~108L × ~6,25 zł/L' },
+  { item: 'Kawasaki Versys 1000 SE (~5,8 L/100km)', amount: '~869 zł', note: '~139L × ~6,25 zł/L' },
+  { item: 'BMW X3 diesel (~7,5 L/100km)', amount: '~1 123 zł', note: '~180L × ~6,25 zł/L' },
   { category: '🛣️ Opłaty drogowe i przełęcze' },
-  { item: 'E-winieta Czechy 10-dniowa (BMW X3)', amount: '~13 €', note: 'motocykle zwolnione w CZ' },
-  { item: 'Grossglockner (motocykl ×3)', amount: '~110 €', note: '3 × 36,50 €' },
-  { item: 'Rossfeld Panoramastraße (×4 pojazdy)', amount: '~36 €', note: '~9 € za pojazd' },
+  { item: 'E-winieta Czechy 10-dniowa (BMW X3)', amount: '~56 zł', note: 'motocykle zwolnione w CZ' },
+  { item: 'Grossglockner (motocykl ×3)', amount: '~473 zł', note: '3 × 36,50 € × 4,30 zł' },
+  { item: 'Rossfeld Panoramastraße (×4 pojazdy)', amount: '~155 zł', note: '~9 € × 4 × 4,30 zł' },
   { category: '🎢 Atrakcje' },
-  { item: 'Kolejka SchafbergBahn (4 osoby, góra-dół)', amount: '~226 €', note: '~56,50 €/os.' },
+  { item: 'Kolejka SchafbergBahn (6 osób, góra-dół)', amount: '~1 574 zł', note: '~61 €/os. × 6 × 4,30 zł' },
   { item: 'Zapora Vajont (wstęp)', amount: 'gratis', note: 'dostęp wolny' },
-  { item: 'Tre Cime di Lavaredo (dojazd/parking)', amount: '~30 €', note: 'opłata za drogę dojazdową' },
-  { category: '🏨 Noclegi (do uzupełnienia)' },
-  { item: 'Noc 0 — Olesno', amount: '??? €', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 1 — Wels', amount: '??? €', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 2 — Zell am See', amount: '??? €', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 3, 4, 5 — Cortina d\'Ampezzo (3 noce)', amount: '??? €', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 6 — Villach', amount: '??? €', note: 'do rezerwacji', dummy: true },
-  { item: 'Noc 7 — Krems an der Donau', amount: '??? €', note: 'do rezerwacji', dummy: true },
+  { item: 'Tre Cime di Lavaredo (dojazd/parking)', amount: '~129 zł', note: '~30 € × 4,30 zł' },
+  { category: '🏨 Noclegi' },
+  { item: 'Noc 0 — Oleszna', amount: '~411 zł', note: 'Airbnb, 4 osoby, 1 noc' },
+  { item: 'Noc 1 — Wels (pow. Linz-Land)', amount: '~1 400 zł', note: 'Airbnb, 6 osób, 1 noc' },
+  { item: 'Noc 2 — Zell am See (Kaprun)', amount: '~2 352 zł', note: 'Airbnb, 6 osób, 1 noc' },
+  { item: 'Noc 3, 4, 5 — Cortina (Pieve di Cadore)', amount: '~4 571 zł', note: 'Airbnb, 6 osób, 3 noce' },
+  { item: 'Noc 6 — Villach', amount: '??? zł', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 7 — Krems an der Donau', amount: '??? zł', note: 'do rezerwacji', dummy: true },
+  { item: 'Noc 8 — Oleszna', amount: '??? zł', note: 'do rezerwacji', dummy: true },
   { category: '🍕 Wyżywienie (szacunek)' },
-  { item: '8 dni × 4 osoby × ~40 €/dzień', amount: '~1 280 €', note: 'restauracje + przekąski' },
+  { item: '8 dni × 6 osób × ~170 zł/dzień', amount: '~8 160 zł', note: 'restauracje + przekąski' },
 ];
 
 const budgetEl = document.getElementById('budgetTable');
@@ -1055,7 +1043,8 @@ budgetData.forEach(row => {
   }
 });
 
-html += `<tr class="total"><td>Łącznie (bez noclegów)</td><td class="amount">~${Math.round(totalMin)} €</td><td class="note">noclegi do uzupełnienia</td></tr>`;
+html += `<tr class="total"><td>Łącznie (z zarezerwowanymi noclegami)</td><td class="amount">~${Math.round(totalMin).toLocaleString('pl-PL')} zł</td><td class="note">3 noclegi jeszcze do uzupełnienia</td></tr>`;
+html += `<tr><td colspan="3" style="padding-top:0.8rem;font-size:0.82rem;color:var(--text-secondary);font-weight:300;border:none">Na osobę (÷6): ~${Math.round(totalMin/6).toLocaleString('pl-PL')} zł · Kurs przeliczeniowy: 1 € ≈ 4,30 zł</td></tr>`;
 html += `</tbody></table>`;
 budgetEl.innerHTML = html;
 </script>
