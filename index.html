@@ -18,11 +18,9 @@
   --border: #E5E5DF;
   --card-bg: #FFFFFF;
   --mountain: #3D6B5E;
-  --stage-colors: #C4451C, #2E7D5B, #2563A8, #8B5CF6, #D97706, #0E7490, #B91C60;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -33,7 +31,6 @@ body {
   font-weight: 400;
 }
 
-/* ─── HERO (compact) ─── */
 .hero {
   position: relative;
   min-height: 40vh;
@@ -95,10 +92,7 @@ body {
   font-weight: 400;
 }
 
-.hero h1 em {
-  font-style: italic;
-  color: #A8D5BA;
-}
+.hero h1 em { font-style: italic; color: #A8D5BA; }
 
 .hero-sub {
   font-size: 1rem;
@@ -108,20 +102,17 @@ body {
   margin: 0 auto;
 }
 
-/* ─── STATS BAR ─── */
 .stats-bar {
   display: flex;
   justify-content: center;
   gap: 3rem;
   flex-wrap: wrap;
-  padding: 2rem 2rem;
+  padding: 2rem;
   background: var(--card-bg);
   border-bottom: 1px solid var(--border);
 }
 
-.stat {
-  text-align: center;
-}
+.stat { text-align: center; }
 
 .stat-value {
   font-family: 'DM Serif Display', serif;
@@ -137,10 +128,7 @@ body {
   font-weight: 500;
 }
 
-/* ─── MAP ─── */
-.map-section {
-  padding: 3rem 2rem;
-}
+.map-section { padding: 3rem 2rem; }
 
 .section-title {
   font-family: 'DM Serif Display', serif;
@@ -189,12 +177,8 @@ body {
 
 .legend-item:hover { opacity: 0.7; }
 
-.legend-dot {
-  width: 12px; height: 4px;
-  border-radius: 2px;
-}
+.legend-dot { width: 12px; height: 4px; border-radius: 2px; }
 
-/* ─── STAGES ─── */
 .stages {
   max-width: 900px;
   margin: 0 auto;
@@ -239,29 +223,10 @@ body {
   flex-wrap: wrap;
 }
 
-.stage-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.35rem;
-}
-
-.stage-distance {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.stage-route {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  font-weight: 300;
-  margin-bottom: 0.6rem;
-}
-
-.stage-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
+.stage-name { font-family: 'DM Serif Display', serif; font-size: 1.35rem; }
+.stage-distance { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+.stage-route { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; margin-bottom: 0.6rem; }
+.stage-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 .tag {
   font-size: 0.72rem;
@@ -272,7 +237,6 @@ body {
   font-weight: 500;
 }
 
-/* ─── STAGE IMAGES ─── */
 .stage-images {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -296,40 +260,18 @@ body {
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
-.stage-images img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.stage-images img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .stage-images .img-caption {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   padding: 0.3rem 0.5rem;
   background: linear-gradient(transparent, rgba(0,0,0,0.6));
   color: white;
   font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
 }
 
-.stage-images .img-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-weight: 400;
-  text-align: center;
-  padding: 0.5rem;
-}
-
-/* ─── ACCOMMODATION EMBED ─── */
 .accommodation-box {
   margin-top: 1.2rem;
   border: 1.5px dashed var(--border);
@@ -339,21 +281,10 @@ body {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.accommodation-box:hover {
-  border-color: #ccc;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-}
+.accommodation-box:hover { border-color: #ccc; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
 
-.accommodation-box-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.accommodation-box-header .accom-icon {
-  font-size: 1.1rem;
-}
+.accommodation-box-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.accommodation-box-header .accom-icon { font-size: 1.1rem; }
 
 .accommodation-box-header h4 {
   font-family: 'DM Serif Display', serif;
@@ -377,9 +308,7 @@ body {
   transition: border-color 0.2s;
 }
 
-.accommodation-box .accom-status a:hover {
-  border-color: var(--accent);
-}
+.accommodation-box .accom-status a:hover { border-color: var(--accent); }
 
 .accommodation-box .accom-link-placeholder {
   display: inline-flex;
@@ -396,9 +325,7 @@ body {
   transition: background 0.2s;
 }
 
-.accommodation-box .accom-link-placeholder:hover {
-  background: #eec9b8;
-}
+.accommodation-box .accom-link-placeholder:hover { background: #eec9b8; }
 
 .accommodation-box.booked {
   border-style: solid;
@@ -419,7 +346,6 @@ body {
   margin-left: 0.5rem;
 }
 
-/* ─── INFO SECTION ─── */
 .info-section {
   max-width: 900px;
   margin: 0 auto;
@@ -440,9 +366,7 @@ body {
   padding: 1.5rem;
 }
 
-.info-card--wide {
-  grid-column: span 2;
-}
+.info-card--wide { grid-column: span 2; }
 
 .info-card h3 {
   font-family: 'DM Serif Display', serif;
@@ -450,28 +374,14 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.info-card p, .info-card ul {
-  font-size: 0.92rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
+.info-card p, .info-card ul { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
+.info-card ul { list-style: none; padding: 0; }
+.info-card li::before { content: '→ '; color: var(--accent); font-weight: 600; }
 
-.info-card ul {
-  list-style: none;
-  padding: 0;
-}
-
-.info-card li::before {
-  content: '→ ';
-  color: var(--accent);
-  font-weight: 600;
-}
 @media (max-width: 640px) {
-    .info-card--wide {
-        grid-column: span 1;
-    }
+  .info-card--wide { grid-column: span 1; }
 }
-/* ─── FOOTER ─── */
+
 footer {
   text-align: center;
   padding: 3rem 2rem;
@@ -487,7 +397,6 @@ footer .cta-text {
   margin-bottom: 0.5rem;
 }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 640px) {
   .hero { min-height: 30vh; }
   .stats-bar { gap: 1.5rem; }
@@ -497,76 +406,148 @@ footer .cta-text {
   .stage-images { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
 
-/* Custom Leaflet popup */
-.leaflet-popup-content-wrapper {
-  border-radius: 8px !important;
-  font-family: 'Source Sans 3', sans-serif !important;
-}
+.leaflet-popup-content-wrapper { border-radius: 8px !important; font-family: 'Source Sans 3', sans-serif !important; }
 .leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; }
 
 /* ─── BUDGET TABLE ─── */
-.budget-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.92rem;
-  margin-top: 1.5rem;
-}
+.budget-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-top: 1.5rem; }
 
 .budget-table th {
-  text-align: left;
-  font-weight: 600;
-  padding: 0.75rem 1rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-align: left; font-weight: 600; padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border); color: var(--text-secondary);
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
 }
 
-.budget-table td {
-  padding: 0.65rem 1rem;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
+.budget-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
 
 .budget-table tr.category-header td {
-  font-weight: 600;
-  padding-top: 1.2rem;
-  border-bottom: 1px solid var(--text);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: 600; padding-top: 1.2rem; border-bottom: 1px solid var(--text);
+  font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em;
 }
 
-.budget-table .amount {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.budget-table .note {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  font-weight: 300;
-}
+.budget-table .amount { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.budget-table .note { color: var(--text-secondary); font-size: 0.82rem; font-weight: 300; }
 
 .budget-table tr.total td {
-  font-weight: 700;
-  font-size: 1.05rem;
-  border-top: 2px solid var(--text);
-  border-bottom: none;
-  padding-top: 1rem;
+  font-weight: 700; font-size: 1.05rem;
+  border-top: 2px solid var(--text); border-bottom: none; padding-top: 1rem;
 }
 
 .budget-table tr.total .amount {
-  color: var(--accent);
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.2rem;
+  color: var(--accent); font-family: 'DM Serif Display', serif; font-size: 1.2rem;
 }
 
-.budget-table .dummy {
+.budget-table .dummy { color: var(--text-secondary); font-style: italic; }
+
+/* ─── COST SPLIT CARDS ─── */
+.split-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .split-grid { grid-template-columns: 1fr; }
+}
+
+.split-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.split-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+
+.split-card[data-person="artur"]::before { background: #C4451C; }
+.split-card[data-person="rafal"]::before { background: #2E7D5B; }
+.split-card[data-person="piotr"]::before { background: #2563A8; }
+
+.split-card-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.split-card-vehicles {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.split-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.3rem 0;
+  font-size: 0.88rem;
+}
+
+.split-line-label { color: var(--text-secondary); font-weight: 300; }
+
+.split-line-amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.split-line.dummy .split-line-amount {
   color: var(--text-secondary);
   font-style: italic;
+  font-weight: 300;
+}
+
+.split-category {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  padding-top: 0.8rem;
+  margin-top: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.split-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.8rem;
+  margin-top: 0.8rem;
+  border-top: 2px solid var(--text);
+}
+
+.split-total-label { font-weight: 600; font-size: 0.92rem; }
+
+.split-total-amount {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.split-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  text-align: right;
+  margin-top: 0.2rem;
 }
 </style>
 </head>
@@ -609,7 +590,6 @@ footer .cta-text {
 <section class="info-section">
   <h2 class="section-title">Informacje praktyczne</h2>
   <div class="info-grid">
-    <!-- Rząd 1: trzy małe karty -->
     <div class="info-card">
       <h3>🏨 Noclegi</h3>
       <ul>
@@ -640,7 +620,6 @@ footer .cta-text {
         <li>Dokumenty: dowód, prawo jazdy, OC</li>
       </ul>
     </div>
-    <!-- Rząd 2: pogoda (szeroka) + logistyka -->
     <div class="info-card info-card--wide">
       <h3>🌦️ Pogoda (12–20 czerwca)</h3>
       <p>Połowa czerwca w Alpach i Dolomitach to początek lata — pogoda bywa zmienna, ale generalnie sprzyja motocyklowym wypadom.</p>
@@ -672,8 +651,201 @@ footer .cta-text {
   <div id="budgetTable"></div>
 </section>
 
+<section class="split-section">
+  <h2 class="section-title">Podział kosztów</h2>
+  <p class="section-subtitle">Rozliczenie na podgrupy (po 2 osoby). Noclegi wspólne i wyżywienie dzielone ÷3.</p>
+  <div class="split-grid">
+
+    <!-- ARTUR -->
+    <div class="split-card" data-person="artur">
+      <div class="split-card-name">Artur</div>
+      <div class="split-card-vehicles">KTM 390 Adventure · 2 osoby</div>
+
+      <div class="split-category">⛽ Paliwo</div>
+      <div class="split-line">
+        <span class="split-line-label">KTM 390 Adventure</span>
+        <span class="split-line-amount">555 zł</span>
+      </div>
+
+      <div class="split-category">🛣️ Opłaty drogowe</div>
+      <div class="split-line">
+        <span class="split-line-label">Grossglockner (÷3)</span>
+        <span class="split-line-amount">158 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Rossfeld (1 pojazd)</span>
+        <span class="split-line-amount">39 zł</span>
+      </div>
+
+      <div class="split-category">🎢 Atrakcje (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">Kolejka SchafbergBahn</span>
+        <span class="split-line-amount">525 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Tre Cime parking</span>
+        <span class="split-line-amount">43 zł</span>
+      </div>
+
+      <div class="split-category">🏨 Noclegi</div>
+      <div class="split-line">
+        <span class="split-line-label">Noc 0 — Oleszna (÷2)</span>
+        <span class="split-line-amount">206 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
+        <span class="split-line-amount">2 774 zł</span>
+      </div>
+      <div class="split-line dummy">
+        <span class="split-line-label">Noc 6, 7 (÷3)</span>
+        <span class="split-line-amount">??? zł</span>
+      </div>
+      <div class="split-line dummy">
+        <span class="split-line-label">Noc 8 — Oleszna (÷2)</span>
+        <span class="split-line-amount">??? zł</span>
+      </div>
+
+      <div class="split-category">🍕 Wyżywienie (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">8 dni</span>
+        <span class="split-line-amount">2 720 zł</span>
+      </div>
+
+      <div class="split-total">
+        <span class="split-total-label">Razem (znane)</span>
+        <span class="split-total-amount">~7 020 zł</span>
+      </div>
+      <div class="split-note">+ noc 6, 7, 8 do uzupełnienia</div>
+    </div>
+
+    <!-- RAFAŁ -->
+    <div class="split-card" data-person="rafal">
+      <div class="split-card-name">Rafał</div>
+      <div class="split-card-vehicles">KTM 890 Adventure + BMW X3 · 2 osoby</div>
+
+      <div class="split-category">⛽ Paliwo</div>
+      <div class="split-line">
+        <span class="split-line-label">KTM 890 Adventure</span>
+        <span class="split-line-amount">675 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">BMW X3 diesel</span>
+        <span class="split-line-amount">1 123 zł</span>
+      </div>
+
+      <div class="split-category">🛣️ Opłaty drogowe</div>
+      <div class="split-line">
+        <span class="split-line-label">E-winieta Czechy (auto)</span>
+        <span class="split-line-amount">56 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Grossglockner (÷3)</span>
+        <span class="split-line-amount">158 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Rossfeld (2 pojazdy)</span>
+        <span class="split-line-amount">78 zł</span>
+      </div>
+
+      <div class="split-category">🎢 Atrakcje (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">Kolejka SchafbergBahn</span>
+        <span class="split-line-amount">525 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Tre Cime parking</span>
+        <span class="split-line-amount">43 zł</span>
+      </div>
+
+      <div class="split-category">🏨 Noclegi</div>
+      <div class="split-line">
+        <span class="split-line-label">Noc 0 — Oleszna (÷2)</span>
+        <span class="split-line-amount">206 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
+        <span class="split-line-amount">2 774 zł</span>
+      </div>
+      <div class="split-line dummy">
+        <span class="split-line-label">Noc 6, 7 (÷3)</span>
+        <span class="split-line-amount">??? zł</span>
+      </div>
+      <div class="split-line dummy">
+        <span class="split-line-label">Noc 8 — Oleszna (÷2)</span>
+        <span class="split-line-amount">??? zł</span>
+      </div>
+
+      <div class="split-category">🍕 Wyżywienie (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">8 dni</span>
+        <span class="split-line-amount">2 720 zł</span>
+      </div>
+
+      <div class="split-total">
+        <span class="split-total-label">Razem (znane)</span>
+        <span class="split-total-amount">~8 358 zł</span>
+      </div>
+      <div class="split-note">+ noc 6, 7, 8 do uzupełnienia</div>
+    </div>
+
+    <!-- PIOTR -->
+    <div class="split-card" data-person="piotr">
+      <div class="split-card-name">Piotr</div>
+      <div class="split-card-vehicles">Kawasaki Versys 1000 SE · 2 osoby</div>
+
+      <div class="split-category">⛽ Paliwo</div>
+      <div class="split-line">
+        <span class="split-line-label">Kawasaki Versys 1000 SE</span>
+        <span class="split-line-amount">869 zł</span>
+      </div>
+
+      <div class="split-category">🛣️ Opłaty drogowe</div>
+      <div class="split-line">
+        <span class="split-line-label">Grossglockner (÷3)</span>
+        <span class="split-line-amount">158 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Rossfeld (1 pojazd)</span>
+        <span class="split-line-amount">39 zł</span>
+      </div>
+
+      <div class="split-category">🎢 Atrakcje (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">Kolejka SchafbergBahn</span>
+        <span class="split-line-amount">525 zł</span>
+      </div>
+      <div class="split-line">
+        <span class="split-line-label">Tre Cime parking</span>
+        <span class="split-line-amount">43 zł</span>
+      </div>
+
+      <div class="split-category">🏨 Noclegi</div>
+      <div class="split-line">
+        <span class="split-line-label">Noc 1–5 wspólne (÷3)</span>
+        <span class="split-line-amount">2 774 zł</span>
+      </div>
+      <div class="split-line dummy">
+        <span class="split-line-label">Noc 6, 7 (÷3)</span>
+        <span class="split-line-amount">??? zł</span>
+      </div>
+
+      <div class="split-category">🍕 Wyżywienie (÷3)</div>
+      <div class="split-line">
+        <span class="split-line-label">8 dni</span>
+        <span class="split-line-amount">2 720 zł</span>
+      </div>
+
+      <div class="split-total">
+        <span class="split-total-label">Razem (znane)</span>
+        <span class="split-total-amount">~7 128 zł</span>
+      </div>
+      <div class="split-note">+ noc 6, 7 do uzupełnienia</div>
+    </div>
+
+  </div>
+</section>
+
 <script>
-// ─── DATA ───
 const stageColors = ['#6B7280','#C4451C','#2E7D5B','#2563A8','#8B5CF6','#D97706','#0E7490','#B91C60', '#4338CA'];
 
 const stages = [
@@ -764,9 +936,7 @@ const stages = [
     tags: ['trekking','Tre Cime','Vajont','Lago del Mis'],
     desc: 'W tym miejscu zostajemy na dłużej. Plany na te dni mogą się zmienić, ale główne założenie - trekkingi po górach + krótkie przejazdy moto. Dzień łączący trekking z jazdą. Rano krótki szlak przy Tre Cime di Lavaredo — jednym z najbardziej ikonicznych widoków Dolomitów. Następnie wizyta przy zaporze Vajont — miejscu jednej z największych katastrof inżynieryjnych XX wieku. W 1963 roku osuwisko góry Monte Toc do zbiornika wywołało 70-metrową falę, która zmiotła kilka miejscowości, zabijając blisko 2000 osób. Sama zapora stoi do dziś nienaruszona — poruszające świadectwo tragedii. Powrót widokowymi trasami wzdłuż pięknego Lago del Mis.',
     overnight: 'Cortina d\'Ampezzo',
-    accommodation: {
-      note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo'
-    },
+    accommodation: { note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo' },
     images: [
         { url: 'https://www.guidedolomiti.com/wp-content/uploads/walk-around-the-tre-cime.webp', caption: 'Tre Cime di Lavaredo' },
         { url: 'https://media.istockphoto.com/id/1206516634/pl/zdj%C4%99cie/widok-z-lotu-ptaka-na-zapor%C4%99-vajont-we-w%C5%82oszech.jpg?s=612x612&w=0&k=20&c=rJrJ_8o9jLq70-ZJId7zL74wzzhVufwJWs-LQKvuEGg=', caption: 'Zapora Vajont' },
@@ -782,9 +952,7 @@ const stages = [
     tags: ['Piz Boè','Torri del Sella','Lago di Fedaia','przełęcze'],
     desc: 'Krótka, ale niezwykle widokowa pętla wokół masywu Sella. Przejazd przez przełęcze z widokami na Piz Boè (3152 m) i dramatyczne Torri del Sella. Postój nad Lago di Fedaia — jeziorem u stóp lodowca Marmolady, najwyższego szczytu Dolomitów. Czysta motocyklowa przyjemność — serpentyny, widoki i włoska kawa na każdym przystanku. Dzień również można połączyć z lekkim trekkingiem.',
     overnight: 'Cortina d\'Ampezzo',
-    accommodation: {
-      note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo'
-    },
+    accommodation: { note: 'Tak samo jak noc 3 — Cortina d\'Ampezzo' },
     images: [
         { url: 'https://www.val-gardena.com/fileadmin/_processed_/9/f/csm_2023-shu-sellajoch-pass-strasse_8419dbd79d.jpg', caption: 'Sella Pass'},
         { url: 'https://www.montagnaestate.it/wp-content/uploads/Lago-Fedaia-visto-dal-Viel-dal-Pan.jpg', caption: 'Lago di Fedaia'},
@@ -799,9 +967,7 @@ const stages = [
     tags: ['Plöckenpass','Villach','trekking', 'wodospady'],
     desc: 'Pożegnanie z Dolomitami. Z Cortiny d\'Ampezzo jedziemy w stronę Austrii przez wspaniałą przełęcz Plöckenpass, leżącą na granicy włosko-austriackiej. Po dojechaniu do Villach zostawiamy motocykle i robimy relaksujący trekking po lokalnym wąwozie z wodospadami (np. Tscheppaschlucht lub pobliskim) — świetny odpoczynek po kilku intensywnych dniach w siodle.',
     overnight: 'Villach',
-    accommodation: {
-      placeholder: 'Nocleg do rezerwacji — Villach'
-    },
+    accommodation: { placeholder: 'Nocleg do rezerwacji — Villach' },
     images: [
       { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0n_4qi4cp2P9y6KvgnumimtAXDMd922MiHw&s', caption: 'Plockenpass'},
       { url: 'https://img.oastatic.com/img2/72622455/max/variant.webp', caption: 'Wodospady Tscheppaschlucht'},
@@ -816,9 +982,7 @@ const stages = [
     tags: ['Red Bull Ring','Styria','Krems', 'Wachau'],
     desc: 'Północny tranzyt przez serce Austrii. Wyjeżdżając z Villach, kierujemy się w stronę wspaniałego toru Red Bull Ring (Spielberg) – obowiązkowy przystanek i punkt zdjęciowy dla fanów motorsportu. Następnie lecimy do malowniczego Krems an der Donau, położonego w winiarskim regionie Wachau nad samym Dunajem.',
     overnight: 'Krems an der Donau',
-    accommodation: {
-      placeholder: 'Nocleg do rezerwacji — Krems an der Donau'
-    },
+    accommodation: { placeholder: 'Nocleg do rezerwacji — Krems an der Donau' },
     images: [
       { url: 'https://www.redbullring.com/en/wp-content/uploads/sites/1/fly-images/40218/SPG2022_0109_RBRing_Gelaende_Uebersichtsplan_Luftbild_GESAMT_221201_300dpi-2880x9999.jpg', caption: 'Tor Red Bull Ring'},
     ]
@@ -835,95 +999,47 @@ const stages = [
     images: []
   }
 ];
-const map = L.map('map', { scrollWheelZoom: false }).setView([47.8, 13.5], 7);
 
+const map = L.map('map', { scrollWheelZoom: false }).setView([47.8, 13.5], 7);
 document.getElementById('map').addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
 document.getElementById('map').addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap',
-  maxZoom: 17
+  attribution: '© OpenStreetMap', maxZoom: 17
 }).addTo(map);
 
 const polylines = [];
 const allBounds = L.latLngBounds();
 
-const gpxFiles = [
-  null,
-  'Austria 1.gpx',
-  'Austria 2.gpx',
-  'Austria 3.gpx',
-  'Austria 4.gpx',
-  'Austria 5.gpx',
-  'Austria 6.gpx',
-  'Austria 7.gpx',
-  'Austria 8.gpx'
-];
+const gpxFiles = [null,'Austria 1.gpx','Austria 2.gpx','Austria 3.gpx','Austria 4.gpx','Austria 5.gpx','Austria 6.gpx','Austria 7.gpx','Austria 8.gpx'];
 
 async function loadAllGPX() {
   for (let i = 0; i < gpxFiles.length; i++) {
     if (!gpxFiles[i]) continue;
     if (!stages[i]) break;
-
     try {
       const response = await fetch(gpxFiles[i]);
       const gpxText = await response.text();
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(gpxText, "text/xml");
-
       let points = xmlDoc.querySelectorAll("trkpt");
-      if (points.length === 0) {
-        points = xmlDoc.querySelectorAll("rtept");
-      }
-      const latlngs = Array.from(points).map(pt => [
-        parseFloat(pt.getAttribute("lat")),
-        parseFloat(pt.getAttribute("lon"))
-      ]);
-
+      if (points.length === 0) points = xmlDoc.querySelectorAll("rtept");
+      const latlngs = Array.from(points).map(pt => [parseFloat(pt.getAttribute("lat")), parseFloat(pt.getAttribute("lon"))]);
       if (latlngs.length === 0) continue;
-
       latlngs.forEach(ll => allBounds.extend(ll));
-
-      L.polyline(latlngs, {
-        color: '#000', weight: 5, opacity: 0.1
-      }).addTo(map);
-
-      const pl = L.polyline(latlngs, {
-        color: stageColors[i],
-        weight: 3.5,
-        opacity: 0.85,
-        lineJoin: 'round',
-        dashArray: stages[i].num === 0 ? '8 6' : null
-      }).addTo(map);
-
+      L.polyline(latlngs, { color: '#000', weight: 5, opacity: 0.1 }).addTo(map);
+      const pl = L.polyline(latlngs, { color: stageColors[i], weight: 3.5, opacity: 0.85, lineJoin: 'round', dashArray: stages[i].num === 0 ? '8 6' : null }).addTo(map);
       pl.on('click', () => highlightStage(i));
       polylines.push(pl);
-
       const label = stages[i].num === 0 ? '0' : stages[i].num;
-      const startIcon = L.divIcon({
-        className: '',
-        html: `<div style="width:22px;height:22px;border-radius:50%;background:${stageColors[i]};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:sans-serif">${label}</div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 11]
-      });
-
-      L.marker(latlngs[0], { icon: startIcon })
-        .addTo(map)
-        .bindPopup(`<b>Etap ${label}: ${stages[i].name}</b><br>${stages[i].route}<br><span style="color:#888">${stages[i].distance || ''}</span>`);
-
-    } catch (error) {
-      console.error(`Nie udało się załadować pliku: ${gpxFiles[i]}`, error);
-    }
+      const startIcon = L.divIcon({ className: '', html: `<div style="width:22px;height:22px;border-radius:50%;background:${stageColors[i]};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;font-family:sans-serif">${label}</div>`, iconSize: [22, 22], iconAnchor: [11, 11] });
+      L.marker(latlngs[0], { icon: startIcon }).addTo(map).bindPopup(`<b>Etap ${label}: ${stages[i].name}</b><br>${stages[i].route}<br><span style="color:#888">${stages[i].distance || ''}</span>`);
+    } catch (error) { console.error(`Nie udało się załadować pliku: ${gpxFiles[i]}`, error); }
   }
-
-  if (allBounds.isValid()) {
-    map.fitBounds(allBounds.pad(0.05));
-  }
+  if (allBounds.isValid()) map.fitBounds(allBounds.pad(0.05));
 }
-
 loadAllGPX();
 
-// ─── LEGEND ───
 const legendEl = document.getElementById('mapLegend');
 stages.forEach((s, i) => {
   const item = document.createElement('div');
@@ -933,94 +1049,39 @@ stages.forEach((s, i) => {
   legendEl.appendChild(item);
 });
 
-// ─── STAGE CARDS ───
 const cardsEl = document.getElementById('stageCards');
 stages.forEach((s, i) => {
   const card = document.createElement('div');
   card.className = 'stage-card';
   card.id = `stage-${i}`;
-
   let imagesHtml = '';
   if (s.images && s.images.length > 0) {
-    imagesHtml = `<div class="stage-images">${s.images.map(img =>
-      `<a href="${img.url}" target="_blank" rel="noopener">
-        <img src="${img.url}" alt="${img.caption || ''}" loading="lazy">
-        ${img.caption ? `<span class="img-caption">${img.caption}</span>` : ''}
-      </a>`
-    ).join('')}</div>`;
+    imagesHtml = `<div class="stage-images">${s.images.map(img => `<a href="${img.url}" target="_blank" rel="noopener"><img src="${img.url}" alt="${img.caption || ''}" loading="lazy">${img.caption ? `<span class="img-caption">${img.caption}</span>` : ''}</a>`).join('')}</div>`;
   }
-
   let accomHtml = '';
   if (s.accommodation) {
     const a = s.accommodation;
     const isBooked = a.status === 'booked';
-    accomHtml = `<div class="accommodation-box${isBooked ? ' booked' : ''}">
-      <div class="accommodation-box-header">
-        <span class="accom-icon">${isBooked ? '✅' : '🏨'}</span>
-        <h4>Nocleg — ${s.overnight || 'do ustalenia'}${isBooked ? `<span class="accom-badge">Zarezerwowane</span>` : ''}</h4>
-      </div>
-      <div class="accom-status">
-        ${isBooked && a.name ? `<strong>${a.name}</strong><br>` : ''}
-        ${a.note ? `${a.note}<br>` : ''}
-        ${a.price ? `Cena: ${a.price}<br>` : ''}
-        ${a.url ? `<a href="${a.url}" target="_blank" rel="noopener" class="accom-link-placeholder">🔗 Zobacz rezerwację</a>` : ''}
-        ${!isBooked && a.placeholder ? `<span style="opacity:0.7;font-style:italic">${a.placeholder}</span>` : ''}
-        ${!isBooked && !a.placeholder && !a.note ? `<span style="opacity:0.7;font-style:italic">Do uzupełnienia</span>` : ''}
-      </div>
-    </div>`;
+    accomHtml = `<div class="accommodation-box${isBooked ? ' booked' : ''}"><div class="accommodation-box-header"><span class="accom-icon">${isBooked ? '✅' : '🏨'}</span><h4>Nocleg — ${s.overnight || 'do ustalenia'}${isBooked ? `<span class="accom-badge">Zarezerwowane</span>` : ''}</h4></div><div class="accom-status">${isBooked && a.name ? `<strong>${a.name}</strong><br>` : ''}${a.note ? `${a.note}<br>` : ''}${a.price ? `Cena: ${a.price}<br>` : ''}${a.url ? `<a href="${a.url}" target="_blank" rel="noopener" class="accom-link-placeholder">🔗 Zobacz rezerwację</a>` : ''}${!isBooked && a.placeholder ? `<span style="opacity:0.7;font-style:italic">${a.placeholder}</span>` : ''}${!isBooked && !a.placeholder && !a.note ? `<span style="opacity:0.7;font-style:italic">Do uzupełnienia</span>` : ''}</div></div>`;
   }
-
-  card.innerHTML = `
-    <div class="stage-number" style="background:${stageColors[i]}">${s.num}</div>
-    <div>
-      <div class="stage-header">
-        <span class="stage-name">${s.name}</span>
-        <span class="stage-distance">${s.distance ? '~'+s.distance : ''}</span>
-      </div>
-      <div class="stage-route">${s.route}</div>
-      <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.6rem;font-weight:300">${s.desc}</p>
-      <div class="stage-tags">${(s.tags||[]).map(t => `<span class="tag">${t}</span>`).join('')}${s.overnight ? `<span class="tag" style="background:var(--accent-light);border-color:var(--accent-light);color:var(--accent)">🏨 ${s.overnight}</span>` : ''}</div>
-      ${imagesHtml}
-      ${accomHtml}
-    </div>
-  `;
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('.stage-images') || e.target.closest('.accommodation-box')) return;
-    highlightStage(i);
-  });
+  card.innerHTML = `<div class="stage-number" style="background:${stageColors[i]}">${s.num}</div><div><div class="stage-header"><span class="stage-name">${s.name}</span><span class="stage-distance">${s.distance ? '~'+s.distance : ''}</span></div><div class="stage-route">${s.route}</div><p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0.6rem;font-weight:300">${s.desc}</p><div class="stage-tags">${(s.tags||[]).map(t => `<span class="tag">${t}</span>`).join('')}${s.overnight ? `<span class="tag" style="background:var(--accent-light);border-color:var(--accent-light);color:var(--accent)">🏨 ${s.overnight}</span>` : ''}</div>${imagesHtml}${accomHtml}</div>`;
+  card.addEventListener('click', (e) => { if (e.target.closest('.stage-images') || e.target.closest('.accommodation-box')) return; highlightStage(i); });
   cardsEl.appendChild(card);
 });
 
-// ─── HIGHLIGHT ───
 let activeStage = -1;
-
 function highlightStage(idx) {
-  polylines.forEach((pl, i) => {
-    pl.setStyle({ weight: 3.5, opacity: 0.85 });
-  });
+  polylines.forEach(pl => pl.setStyle({ weight: 3.5, opacity: 0.85 }));
   document.querySelectorAll('.stage-card').forEach(c => c.style.background = '');
-
-  if (activeStage === idx) {
-    activeStage = -1;
-    map.fitBounds(allBounds.pad(0.05));
-    return;
-  }
-
+  if (activeStage === idx) { activeStage = -1; map.fitBounds(allBounds.pad(0.05)); return; }
   activeStage = idx;
-
-  polylines.forEach((pl, i) => {
-    if (i !== idx) pl.setStyle({ weight: 2, opacity: 0.25 });
-    else pl.setStyle({ weight: 5, opacity: 1 });
-  });
-
+  polylines.forEach((pl, i) => { if (i !== idx) pl.setStyle({ weight: 2, opacity: 0.25 }); else pl.setStyle({ weight: 5, opacity: 1 }); });
   map.fitBounds(polylines[idx].getBounds().pad(0.15));
-
   const card = document.getElementById(`stage-${idx}`);
   card.style.background = stageColors[idx] + '08';
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// ─── BUDGET TABLE (PLN) ───
 const budgetData = [
   { category: '⛽ Paliwo (szacunek na ~2 400 km)' },
   { item: 'KTM 390 Adventure (~3,7 L/100km)', amount: '~555 zł', note: '~89L × ~6,25 zł/L' },
@@ -1049,20 +1110,16 @@ const budgetData = [
 
 const budgetEl = document.getElementById('budgetTable');
 let totalMin = 0;
-let html = `<table class="budget-table">
-  <thead><tr><th>Pozycja</th><th class="amount">Koszt</th><th>Uwagi</th></tr></thead><tbody>`;
-
+let html = `<table class="budget-table"><thead><tr><th>Pozycja</th><th class="amount">Koszt</th><th>Uwagi</th></tr></thead><tbody>`;
 budgetData.forEach(row => {
-  if (row.category) {
-    html += `<tr class="category-header"><td colspan="3">${row.category}</td></tr>`;
-  } else {
+  if (row.category) { html += `<tr class="category-header"><td colspan="3">${row.category}</td></tr>`; }
+  else {
     const amtClass = row.dummy ? 'amount dummy' : 'amount';
     html += `<tr><td>${row.item}</td><td class="${amtClass}">${row.amount}</td><td class="note">${row.note}</td></tr>`;
     const num = parseFloat((row.amount || '').replace(/[^0-9.]/g, ''));
     if (!isNaN(num) && !row.dummy) totalMin += num;
   }
 });
-
 html += `<tr class="total"><td>Łącznie (z zarezerwowanymi noclegami)</td><td class="amount">~${Math.round(totalMin).toLocaleString('pl-PL')} zł</td><td class="note">3 noclegi jeszcze do uzupełnienia</td></tr>`;
 html += `<tr><td colspan="3" style="padding-top:0.8rem;font-size:0.82rem;color:var(--text-secondary);font-weight:300;border:none">Na osobę (÷6): ~${Math.round(totalMin/6).toLocaleString('pl-PL')} zł · Kurs przeliczeniowy: 1 € ≈ 4,30 zł</td></tr>`;
 html += `</tbody></table>`;
