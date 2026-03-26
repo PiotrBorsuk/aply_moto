@@ -440,6 +440,10 @@ body {
   padding: 1.5rem;
 }
 
+.info-card--wide {
+  grid-column: span 2;
+}
+
 .info-card h3 {
   font-family: 'DM Serif Display', serif;
   font-size: 1.1rem;
@@ -462,7 +466,11 @@ body {
   color: var(--accent);
   font-weight: 600;
 }
-
+@media (max-width: 640px) {
+    .info-card--wide {
+        grid-column: span 1;
+    }
+}
 /* ─── FOOTER ─── */
 footer {
   text-align: center;
@@ -601,6 +609,7 @@ footer .cta-text {
 <section class="info-section">
   <h2 class="section-title">Informacje praktyczne</h2>
   <div class="info-grid">
+    <!-- Rząd 1: trzy małe karty -->
     <div class="info-card">
       <h3>🏨 Noclegi</h3>
       <ul>
@@ -611,24 +620,6 @@ footer .cta-text {
         <li>Noc 6 — Villach</li>
         <li>Noc 7 — Krems an der Donau</li>
         <li>Noc 8 - Oleszna okolice</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <h3>🌦️ Pogoda (12–20 czerwca)</h3>
-      <p>Połowa czerwca w Alpach i Dolomitach to początek lata — pogoda bywa zmienna, ale generalnie sprzyja motocyklowym wypadom.</p>
-      <ul>
-        <li><strong>Doliny (1 200–1 500 m n.p.m.):</strong> dzień 15–22°C, noc 8–12°C</li>
-        <li><strong>Przełęcze i wyższe partie (2 000–2 500 m):</strong> dzień 10–16°C, noc 2–6°C — na Grossglocknerze (2 504 m) może być odczuwalnie zimno</li>
-        <li><strong>Cortina d'Ampezzo (~1 224 m):</strong> dzień 17–22°C, noc 7–11°C</li>
-        <li><strong>Czechy (tranzyt):</strong> dzień 20–26°C, noc 10–14°C — typowe ciepłe wczesne lato</li>
-      </ul>
-      <p><strong>Deszcz:</strong> W połowie czerwca opady są umiarkowane. Typowy wzorzec: poranki pogodne i słoneczne, burze i przelotny deszcz po południu/wieczorem — szczególnie w górach. Statystycznie ok. 6–8 dni deszczowych w miesiącu.</p>
-      <p><strong>Dzień:</strong> Prawie 16 h światła dziennego — wschód ok. 5:15, zachód ok. 21:00. Dużo czasu na jazdę.</p>
-      <p><strong>⚠️ Uwagi dla motocyklistów:</strong></p>
-      <ul>
-        <li>Na przełęczach pogoda zmienia się błyskawicznie — rano słońce, po godzinie mgła i deszcz</li>
-        <li>Odzież warstwowa obowiązkowa: kurtka z membraną, podpinka ocieplająca, rękawice na chłód</li>
-        <li>Na Grossglocknerze nawet w czerwcu możliwy śnieg/grad na szczycie — nawierzchnia mokra = mniejsza przyczepność</li>
       </ul>
     </div>
     <div class="info-card">
@@ -647,6 +638,25 @@ footer .cta-text {
         <li>Odzież na zmienną pogodę w górach</li>
         <li>Buty trekkingowe (dzień 4 — Tre Cime, dzień 6 — Villach)</li>
         <li>Dokumenty: dowód, prawo jazdy, OC</li>
+      </ul>
+    </div>
+    <!-- Rząd 2: pogoda (szeroka) + logistyka -->
+    <div class="info-card info-card--wide">
+      <h3>🌦️ Pogoda (12–20 czerwca)</h3>
+      <p>Połowa czerwca w Alpach i Dolomitach to początek lata — pogoda bywa zmienna, ale generalnie sprzyja motocyklowym wypadom.</p>
+      <ul>
+        <li><strong>Doliny (1 200–1 500 m n.p.m.):</strong> dzień 15–22°C, noc 8–12°C</li>
+        <li><strong>Przełęcze i wyższe partie (2 000–2 500 m):</strong> dzień 10–16°C, noc 2–6°C — na Grossglocknerze (2 504 m) może być odczuwalnie zimno</li>
+        <li><strong>Cortina d'Ampezzo (~1 224 m):</strong> dzień 17–22°C, noc 7–11°C</li>
+        <li><strong>Czechy (tranzyt):</strong> dzień 20–26°C, noc 10–14°C — typowe ciepłe wczesne lato</li>
+      </ul>
+      <p><strong>Deszcz:</strong> W połowie czerwca opady są umiarkowane. Typowy wzorzec: poranki pogodne i słoneczne, burze i przelotny deszcz po południu/wieczorem — szczególnie w górach. Statystycznie ok. 6–8 dni deszczowych w miesiącu.</p>
+      <p><strong>Dzień:</strong> Prawie 16 h światła dziennego — wschód ok. 5:15, zachód ok. 21:00. Dużo czasu na jazdę.</p>
+      <p><strong>⚠️ Uwagi dla motocyklistów:</strong></p>
+      <ul>
+        <li>Na przełęczach pogoda zmienia się błyskawicznie — rano słońce, po godzinie mgła i deszcz</li>
+        <li>Odzież warstwowa obowiązkowa: kurtka z membraną, podpinka ocieplająca, rękawice na chłód</li>
+        <li>Na Grossglocknerze nawet w czerwcu możliwy śnieg/grad na szczycie — nawierzchnia mokra = mniejsza przyczepność</li>
       </ul>
     </div>
     <div class="info-card">
